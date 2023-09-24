@@ -1,0 +1,135 @@
+body {
+  background-color: #f8f0e5;
+}
+
+#head {
+  background-image: url("./assets/images/background home page.png");
+  background-size: cover;
+  background-position: bottom right;
+  width: 100%;
+  height: 300px;
+}
+
+.mouseo {
+  font-family: "MuseoModerno", cursive;
+}
+
+.dosis {
+  font-family: "Dosis", sans-serif;
+}
+
+.work {
+  font-family: "Work Sans", sans-serif;
+}
+.outline {
+  -webkit-text-stroke: 2px black;
+  color: transparent !important;
+}
+
+.pill1 {
+  left: 70px;
+  top: 164px;
+  width: 293px;
+  height: 143px; /* Adjust the height as needed */
+  background-color: transparent; /* Transparent fill */
+  border: 20px solid #f8f0e560; /* 30% opacity outline */
+  border-radius: 85px; /* Half of the height to make it a pill shape */
+  text-align: center;
+  line-height: 50px; /* Vertically center text */
+  position: absolute;
+}
+
+.pill2 {
+  width: 500px;
+  height: 250px; /* Adjust the height as needed */
+  background-color: transparent !important; /* Transparent fill */
+  background: linear-gradient(310deg, #dac0a3, #eadbc8) border-box;
+  border-radius: 45px;
+  border: 45px solid transparent;
+  border-radius: 300px; /* Half of the height to make it a pill shape */
+  text-align: center;
+  line-height: 50px; /* Vertically center text */
+  grid-area: 1/1 / span 3/1;
+}
+.profile-picture {
+  width: 130px;
+  border-radius: 50%;
+  border: #eadbc8 solid 0.3rem;
+}
+
+.feature-icon {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 0.75rem;
+}
+.bg-grad {
+  background: linear-gradient(135deg, #dac0a3, #eadbc8);
+}
+.bg-grad-blue {
+  background: #2b1d2140;
+  color: #eadbc8 !;
+}
+.bg-blue {
+  background: #0d1a2e;
+}
+
+.grid-container {
+  display: grid;
+  grid-template: 100px 83px 83px / 1fr;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  align-items: center;
+}
+.grid-1 {
+  font-size: 4rem !important;
+  align-self: start;
+  grid-area: 1/1/1/1;
+  margin-left: 30px;
+  margin-top: 8px;
+}
+.grid-2 {
+  grid-area: 2/1/2/-1;
+}
+.grid-3 {
+  margin-top: 10px;
+  align-self: end;
+  grid-area: 3/1/3/-1;
+  padding: 20px;
+  border: 0px;
+}
+
+@media (min-width: 992px) {
+  .center-flex {
+    display: flex;
+    justify-content: center;
+  }
+  .pill1 {
+    left: 70px;
+    top: 120px;
+  }
+}
+@media (max-width: 768px) {
+  .pill1 {
+    left: 15px;
+    top: 169px;
+  }
+}
+
+.gradient-background {
+  background: linear-gradient(300deg, #dac0a3, #f8f0e5, #102c57);
+  background-size: 180% 180%;
+  animation: gradient-animation 18s ease infinite;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
