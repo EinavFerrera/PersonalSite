@@ -7,7 +7,7 @@ body {
   background-size: cover;
   background-position: bottom right;
   width: 100%;
-  height: 430px;
+  height: 480px;
 }
 
 .mouseo {
@@ -127,8 +127,8 @@ body {
 }
 .glow {
   font-size: 80px;
-  color: #fff;
-  text-align: center;
+  color: #f8f0e540;
+  text-align: right;
   animation: glow 5s ease-in-out infinite alternate;
 }
 
