@@ -116,6 +116,35 @@ body {
   }
 }
 
+@media (max-width: 576px) {
+  .float {
+    float: right;
+  }
+  .pill1 {
+    left: 150px;
+    top: 180px;
+  }
+}
+.glow {
+  font-size: 80px;
+  color: #fff;
+  text-align: center;
+  animation: glow 5s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 10px transparent, 0 0 20px transparent,
+      0 0 30px transparent, 0 0 40px transparent, 0 0 50px transparent,
+      0 0 60px transparent, 0 0 70px transparent;
+  }
+
+  to {
+    text-shadow: 0 0 20px #f8f0e540, 0 0 30px #f8f0e540, 0 0 40px #f8f0e540,
+      0 0 50px #f8f0e540, 0 0 60px #f8f0e540, 0 0 70px #f8f0e540,
+      0 0 80px #f8f0e540;
+  }
+}
 .gradient-background {
   background: linear-gradient(300deg, #dac0a3, #f8f0e5, #102c57);
   background-size: 180% 180%;
