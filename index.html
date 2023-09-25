@@ -20,82 +20,92 @@
   </head>
 
   <body>
-    <section class="bunner">
+    <section class="navibar">
       <nav
-        class="navbar navbar-expand-md bg-dark sticky-top border-bottom py-0 pb-1"
-        data-bs-theme="dark"
+        class="navbar navbar-expand-lg navbar-dark bg-dark"
+        aria-label="Offcanvas navbar large"
       >
-        <div class="container">
-          <a class="navbar-brand d-md-none mouseo" href="#">
+        <div class="container-fluid">
+          <a class="navbar-brand mouseo href="#">
             <img
-              src="./assets/images/logo noedges light.png"
-              alt="EF logo"
-              width="35"
+            src="./assets/images/logo noedges light.png"
+            alt="EF logo"
+            width="35"
             />
-            Einav Ferrera
+              Einav Ferrera
           </a>
           <button
             class="navbar-toggler"
             type="button"
             data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvas"
-            aria-controls="#offcanvas"
+            data-bs-target="#offcanvasNavbar2"
+            aria-controls="offcanvasNavbar2"
             aria-label="Toggle navigation"
           >
             <span class="navbar-toggler-icon"></span>
           </button>
           <div
-            class="offcanvas offcanvas-end"
+            class="offcanvas offcanvas-end text-bg-dark"
             tabindex="-1"
-            id="#offcanvas"
-            aria-labelledby="#offcanvasLabel"
+            id="offcanvasNavbar2"
+            aria-labelledby="offcanvasNavbar2Label"
           >
             <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="#offcanvasLabel">
-                Einav Ferrera
+              <h5 class="offcanvas-title" id="offcanvasNavbar2Label">
+                Offcanvas
               </h5>
               <button
                 type="button"
-                class="btn-close"
+                class="btn-close btn-close-white"
                 data-bs-dismiss="offcanvas"
                 aria-label="Close"
               ></button>
             </div>
             <div class="offcanvas-body">
-              <ul class="navbar-nav flex-grow-1 justify-content-between">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    <img
-                      src="./assets/images/logo noedges light.png"
-                      alt="EF logo"
-                      width="35"
-                    />
+                  <a class="nav-link active" aria-current="page" href="#"
+                    >Home</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Dropdown
                   </a>
-                </li>
-                <li class="nav-item"><a class="nav-link" href="#">Tour</a></li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Product</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Features</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Enterprise</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Support</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Pricing</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    <svg class="bi" width="24" height="24">
-                      <use xlink:href="#cart"></use>
-                    </svg>
-                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li>
+                      <a class="dropdown-item" href="#">Another action</a>
+                    </li>
+                    <li>
+                      <hr class="dropdown-divider" />
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </li>
+                  </ul>
                 </li>
               </ul>
+              <form class="d-flex mt-3 mt-lg-0 col-8" role="search">
+                <input
+                  class="form-control me-2"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+                <button class="btn btn-outline-success" type="submit">
+                  Search
+                </button>
+              </form>
             </div>
           </div>
         </div>
@@ -118,7 +128,7 @@
             <p
               class="fw-bold float lead work col-6 col-sm-4 col-md-12 fw-medium position-relative z-2 ps-md-5 ps-2"
             >
-              and I love stepping out of my safe-zone
+              and I love stepping out of my comfort-zone
             </p>
           </div>
         </div>
@@ -134,7 +144,7 @@
             class="bi mt-4 mb-3"
           />
           <use xlink:href="#bootstrap"></use>
-          <h2 class="text-body-emphasis mouseo fs-4 mt-3">HEY.</h2>
+          <h2 class="text-body-emphasis mouseo fs-4 mt-3">Hey.</h2>
           <p class="col-lg-11 mx-auto fs-5 text-muted work fw-light">
             I am a software and web developer. After years of project
             management, I am eager to dive into the worlds of code, brackets,
