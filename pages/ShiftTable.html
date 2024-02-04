@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Einav Ferrera</title>
+    <title>KOSEM</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -69,14 +69,6 @@
             </div>
             <div class="offcanvas-body">
               <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <!-- <li class="nav-item">
-                  <a
-                    class="nav-link active mouseo"
-                    aria-current="page"
-                    href="./about.html"
-                    >About me</a
-                  >
-                </li> -->
                 <li class="nav-item">
                   <a class="nav-link mouseo" href="./protflio.html"
                     >Protfolio</a
@@ -151,61 +143,690 @@
                   </ul>
                 </li>
               </ul>
-              <!-- <form
-                class="d-flex mt-3 mt-lg-0 col-8 col-lg-3 work"
-                role="search"
-              >
-                <input
-                  class="form-control me-2"
-                  type="search"
-                  placeholder="Favorite Beer"
-                  aria-label="Search"
-                />
-                <button class="btn btn-outline-light mouseo" type="submit">
-                  DRAW
-                </button>
-              </form> -->
             </div>
           </div>
         </div>
       </nav>
     </section>
-    <section class="shift-table">
-      <button
-        class="btn btn-dark mouseo"
-        style="padding: 0% 25%; margin: 0% 25%"
-        onclick="generate()"
+
+    <section class="shift-needs-input">
+      <h2
+        class="dark mouseo py-3"
+        style="width: 100%; text-align: center; font-size: 2.5rem"
       >
-        generate
-      </button>
+        Shift Needs
+      </h2>
+      <form id="shiftNeedsForm" class="container text-center">
+        <!-- Sunday -->
+        <div class="d-inline-flex flex-column align-items-center">
+          <label>Sunday:</label>
+          <div class="d-flex pe-2">
+            <input
+              id="sunday1"
+              name="sunday"
+              required
+              class="form-control"
+              style="width: 40px"
+              value="1"
+            />
+            <input
+              id="sunday2"
+              name="sunday"
+              required
+              class="form-control"
+              style="width: 40px"
+              value="1"
+            />
+            <input
+              id="sunday3"
+              name="sunday"
+              required
+              class="form-control"
+              style="width: 40px"
+              value="1"
+            />
+          </div>
+        </div>
+        <!-- Monday -->
+        <div class="d-inline-flex flex-column align-items-center">
+          <label>Monday:</label>
+          <div class="d-flex pe-2">
+            <input
+              id="monday1"
+              name="monday"
+              required
+              class="form-control"
+              style="width: 40px"
+              value="1"
+            />
+            <input
+              id="monday2"
+              name="monday"
+              required
+              class="form-control"
+              style="width: 40px"
+              value="1"
+            />
+            <input
+              id="monday3"
+              name="monday"
+              required
+              class="form-control"
+              style="width: 40px"
+              value="1"
+            />
+          </div>
+        </div>
+        <!-- Tuesday -->
+        <div class="d-inline-flex flex-column align-items-center">
+          <label>Tuesday:</label>
+          <div class="d-flex pe-2">
+            <input
+              id="tuesday1"
+              name="tuesday"
+              required
+              class="form-control"
+              style="width: 40px"
+              value="1"
+            />
+            <input
+              id="tuesday2"
+              name="tuesday"
+              required
+              class="form-control"
+              style="width: 40px"
+              value="1"
+            />
+            <input
+              id="tuesday3"
+              name="tuesday"
+              required
+              class="form-control"
+              style="width: 40px"
+              value="1"
+            />
+          </div>
+        </div>
+        <!-- Wednesday -->
+        <div class="d-inline-flex flex-column align-items-center">
+          <label>Wednesday:</label>
+          <div class="d-flex pe-2">
+            <input
+              id="wednesday1"
+              name="wednesday"
+              required
+              class="form-control"
+              style="width: 40px"
+              value="1"
+            />
+            <input
+              id="wednesday2"
+              name="wednesday"
+              required
+              class="form-control"
+              style="width: 40px"
+              value="1"
+            />
+            <input
+              id="wednesday3"
+              name="wednesday"
+              required
+              class="form-control"
+              style="width: 40px"
+              value="1"
+            />
+          </div>
+        </div>
+        <!-- Thursday -->
+        <div class="d-inline-flex flex-column align-items-center">
+          <label>Thursday:</label>
+          <div class="d-flex pe-2">
+            <input
+              id="thursday1"
+              name="thursday"
+              required
+              class="form-control"
+              style="width: 40px"
+              value="1"
+            />
+            <input
+              id="thursday2"
+              name="thursday"
+              required
+              class="form-control"
+              style="width: 40px"
+              value="1"
+            />
+            <input
+              id="thursday3"
+              name="thursday"
+              required
+              class="form-control"
+              style="width: 40px"
+              value="1"
+            />
+          </div>
+        </div>
+        <!-- Friday -->
+        <div class="d-inline-flex flex-column align-items-center">
+          <label>Friday:</label>
+          <div class="d-flex pe-2">
+            <input
+              id="friday1"
+              name="friday"
+              required
+              class="form-control"
+              style="width: 40px"
+              value="1"
+            />
+            <input
+              id="friday2"
+              name="friday"
+              required
+              class="form-control"
+              style="width: 40px"
+              value="1"
+            />
+            <input
+              id="friday3"
+              name="friday"
+              required
+              class="form-control"
+              style="width: 40px"
+              value="1"
+            />
+          </div>
+        </div>
+        <!-- Saturday -->
+        <div class="d-inline-flex flex-column align-items-center">
+          <label>Saturday:</label>
+          <div class="d-flex pe-2">
+            <input
+              id="saturday1"
+              name="saturday"
+              required
+              class="form-control"
+              style="width: 40px"
+              value="1"
+            />
+            <input
+              id="saturday2"
+              name="saturday"
+              required
+              class="form-control"
+              style="width: 40px"
+              value="1"
+            />
+            <input
+              id="saturday3"
+              name="saturday"
+              required
+              class="form-control"
+              style="width: 40px"
+              value="1"
+            />
+          </div>
+        </div>
+        <!-- Button to generate the graph -->
+      </form>
+    </section>
+
+    <section class="user-input">
+      <h2
+        class="dark mouseo pt-5"
+        style="width: 100%; text-align: center; font-size: 2.5rem"
+      >
+        User Input
+      </h2>
+      <form id="userInputForm" class="container">
+        <div class="row g-5 justify-content-center">
+          <div class="col-4">
+            <label for="userName" class="form-label">Name:</label>
+            <input
+              type="text"
+              id="userName"
+              name="userName"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="col-2">
+            <label for="maxShifts" class="form-label"
+              >Max Number of Shifts:</label
+            >
+            <input
+              type="text"
+              id="maxShifts"
+              name="maxShifts"
+              class="form-control"
+              required
+            />
+          </div>
+          <div
+            class="col-1 align-self-center text-center"
+            style="margin-top: 80px"
+          >
+            <button
+              type="button"
+              class="btn btn-outline-dark mouseo"
+              onclick="checkAll()"
+              style="font-size: 0.7rem; width: 5.5rem"
+            >
+              Check All
+            </button>
+          </div>
+        </div>
+        <div class="row g-3">
+          <div class="col-12 text-center gy-5">
+            <!-- Sunday -->
+            <div class="d-inline-flex flex-column align-items-center">
+              <label
+                id="sunday"
+                class="btn-outline-dark m-2"
+                onclick="checkAll(this)"
+                >Sunday</label
+              >
+              <div class="d-flex p-2">
+                <div
+                  class="btn-group mx-auto"
+                  role="group"
+                  aria-label="Basic checkbox toggle button group"
+                >
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="sunday1Checkbox"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary"
+                    for="sunday1Checkbox"
+                  ></label>
+
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="sunday2Checkbox"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary"
+                    for="sunday2Checkbox"
+                  ></label>
+
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="sunday3Checkbox"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary"
+                    for="sunday3Checkbox"
+                  ></label>
+                </div>
+              </div>
+            </div>
+            <!-- Monday -->
+            <div class="d-inline-flex flex-column align-items-center">
+              <label
+                id="monday"
+                class="btn-outline-dark m-2"
+                onclick="checkAll(this)"
+                >Monday</label
+              >
+              <div class="d-flex p-2">
+                <div
+                  class="btn-group mx-auto"
+                  role="group"
+                  aria-label="Basic checkbox toggle button group"
+                >
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="monday1Checkbox"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary"
+                    for="monday1Checkbox"
+                  ></label>
+
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="monday2Checkbox"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary"
+                    for="monday2Checkbox"
+                  ></label>
+
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="monday3Checkbox"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary"
+                    for="monday3Checkbox"
+                  ></label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tuesday -->
+            <div class="d-inline-flex flex-column align-items-center">
+              <label
+                id="tuesday"
+                class="btn-outline-dark m-2"
+                onclick="checkAll(this)"
+                >Tuesday</label
+              >
+              <div class="d-flex p-2">
+                <div
+                  class="btn-group mx-auto"
+                  role="group"
+                  aria-label="Basic checkbox toggle button group"
+                >
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="tuesday1Checkbox"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary"
+                    for="tuesday1Checkbox"
+                  ></label>
+
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="tuesday2Checkbox"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary"
+                    for="tuesday2Checkbox"
+                  ></label>
+
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="tuesday3Checkbox"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary"
+                    for="tuesday3Checkbox"
+                  ></label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Wednesday -->
+            <div class="d-inline-flex flex-column align-items-center">
+              <label
+                id="wednesday"
+                class="btn-outline-dark m-2"
+                onclick="checkAll(this)"
+                >Wednesday</label
+              >
+              <div class="d-flex p-2">
+                <div
+                  class="btn-group mx-auto"
+                  role="group"
+                  aria-label="Basic checkbox toggle button group"
+                >
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="wednesday1Checkbox"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary"
+                    for="wednesday1Checkbox"
+                  ></label>
+
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="wednesday2Checkbox"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary"
+                    for="wednesday2Checkbox"
+                  ></label>
+
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="wednesday3Checkbox"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary"
+                    for="wednesday3Checkbox"
+                  ></label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Thursday -->
+            <div class="d-inline-flex flex-column align-items-center">
+              <label
+                id="thursday"
+                class="btn-outline-dark m-2"
+                onclick="checkAll(this)"
+                >Thursday</label
+              >
+              <div class="d-flex p-2">
+                <div
+                  class="btn-group mx-auto"
+                  role="group"
+                  aria-label="Basic checkbox toggle button group"
+                >
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="thursday1Checkbox"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary"
+                    for="thursday1Checkbox"
+                  ></label>
+
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="thursday2Checkbox"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary"
+                    for="thursday2Checkbox"
+                  ></label>
+
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="thursday3Checkbox"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary"
+                    for="thursday3Checkbox"
+                  ></label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Friday -->
+            <div class="d-inline-flex flex-column align-items-center">
+              <label
+                id="friday"
+                class="btn-outline-dark m-2"
+                onclick="checkAll(this)"
+                >Friday</label
+              >
+              <div class="d-flex p-2">
+                <div
+                  class="btn-group mx-auto"
+                  role="group"
+                  aria-label="Basic checkbox toggle button group"
+                >
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="friday1Checkbox"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary"
+                    for="friday1Checkbox"
+                  ></label>
+
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="friday2Checkbox"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary"
+                    for="friday2Checkbox"
+                  ></label>
+
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="friday3Checkbox"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary"
+                    for="friday3Checkbox"
+                  ></label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Saturday -->
+            <div class="d-inline-flex flex-column align-items-center">
+              <label
+                id="saturday"
+                class="btn-outline-dark m-2"
+                onclick="checkAll(this)"
+                >Saturday</label
+              >
+              <div class="d-flex p-2">
+                <div
+                  class="btn-group mx-auto"
+                  role="group"
+                  aria-label="Basic checkbox toggle button group"
+                >
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="saturday1Checkbox"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary"
+                    for="saturday1Checkbox"
+                  ></label>
+
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="saturday2Checkbox"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary"
+                    for="saturday2Checkbox"
+                  ></label>
+
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="saturday3Checkbox"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-secondary"
+                    for="saturday3Checkbox"
+                  ></label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row g-3">
+          <div class="col-12 text-center gy-4">
+            <button
+              type="submit"
+              class="btn btn-outline-dark mouseo fs-6"
+              onclick="addUser()"
+            >
+              insert
+            </button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <section class="signed-users">
+      <div
+        id="sigend-user-container"
+        class="d-flex gap-2 justify-content-center py-5"
+      ></div>
+    </section>
+
+    <section class="shift-table-generator">
+      <div class="d-flex justify-content-center align-items-center text-center">
+        <button
+          class="btn btn-dark mouseo py-2 fs-4"
+          style="padding: 0% 10%"
+          onclick="generate()"
+        >
+          generate
+        </button>
+        <span
+          class="badge d-flex p-2 text-center text-dark-emphasis bg-dark-subtle rounded-pill m-2"
+          data-bs-toggle="popover"
+          data-bs-placement="top"
+          data-bs-content="Delete all Users"
+        >
+          <button
+            type="button"
+            class="btn-close m-2"
+            aria-label="Close"
+            onclick="localStorageClear()"
+          ></button>
+        </span>
+      </div>
 
       <div
         id="sholtim-container"
         class="d-flex flex-row flex-wrap mb-3 pb-4 pt-3 justify-content-around"
-      >
-        <!-- <div id="sholet-1" style="display: flex; flex-direction: column">
-          <button type="button" class="btn btn-dark position-relative px-5">
-            <span class="name">Einav</span>
-            <span
-              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-            >
-              0
-            </span>
-          </button>
-          <ul class="list-group">
-            <li id="shift-1" class="list-group-item visually-hidden">
-              A second item
-            </li>
-            <li id="shift-2" class="list-group-item visually-hidden">
-              A second item
-            </li>
-            <li id="shift-3" class="list-group-item visually-hidden">
-              A second item
-            </li>
-          </ul>
-        </div> -->
-      </div>
+      ></div>
+      <div
+        id="user-container"
+        class="d-flex flex-row flex-wrap mb-3 pb-4 pt-3 justify-content-around"
+      ></div>
     </section>
+
+    <section class="toaseters">
+      <div class="toast-container position-fixed bottom-0 end-0"></div>
+    </section>
+
     <section class="footer gradient-background">
       <div class="container">
         <footer
@@ -239,11 +860,13 @@
         </footer>
       </div>
     </section>
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
+    <script src="../assets/scripts/NewUserData.js"></script>
     <script src="../assets/scripts/ShiftTable-Generator.js"></script>
   </body>
 </html>
