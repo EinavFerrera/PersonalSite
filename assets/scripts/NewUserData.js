@@ -6,12 +6,12 @@ const popoverList = [...popoverTriggerList].map(
 );
 
 let namesArray = [];
-let click = 0;
-let shiftsAvailability = [];
 let maxShifts = [];
+let sholtimObjectArray = [];
+
+let shiftsAvailability = [];
 let shiftNeeds = [];
 let Vertix = 0;
-let sholtimObjectArray = [];
 let graph = [];
 let u, v;
 let rGraph = new Array(Vertix);
@@ -56,29 +56,82 @@ class Sholet {
   }
 }
 
+function InitializeData() {
+  // Retrieve arrays from localStorage
+  namesArray = JSON.parse(localStorage.getItem("namesArray")) || [];
+  maxShifts = JSON.parse(localStorage.getItem("maxShifts")) || [];
+  sholtimObjectArray =
+    JSON.parse(localStorage.getItem("sholtimObjectArray")) || [];
+  if (localStorage.getItem("sholtimObjectArray") !== null) {
+    for (let i = 0; i < namesArray.length; i++) {
+      addUserBadge(
+        sholtimObjectArray[i].name,
+        sholtimObjectArray[i].shifts,
+        sholtimObjectArray[i].maxShifts
+      );
+    }
+    shiftNeeds = JSON.parse(localStorage.getItem("shiftNeeds")) || [];
+    initializeShiftNeeds();
+    generateGraph();
+  }
+}
+
+function initializeShiftNeeds() {
+  for (const day of daysOfWeek) {
+    for (let i = 1; i <= 3; i++) {
+      const localStorageKey = day.toLowerCase() + i;
+      const shiftValue = localStorage.getItem(localStorageKey);
+      const inputElement = $("#" + day.toLowerCase() + i);
+      if (shiftValue !== null) {
+        inputElement.val(shiftValue);
+      } else {
+        // If no data in localStorage, set shift value to 1
+        inputElement.val("1");
+        // Update localStorage with default value
+        localStorage.setItem(localStorageKey, "1");
+      }
+    }
+  }
+}
+
+function setShiftNeeds() {
+  for (const day of daysOfWeek) {
+    for (let i = 1; i <= 3; i++) {
+      const inputElement = $("#" + day.toLowerCase() + i);
+      localStorage.setItem(inputElement.attr("id"), inputElement.val());
+    }
+  }
+}
+
 function addUser() {
   // Get user input values
   let userName = $("#userName").val();
+  if (userName == "") {
+    return;
+  }
   let shifts = getCheckboxValues();
   let maxShift = parseInt($("#maxShifts").val());
 
   let newSholet = new Sholet(userName, shifts, maxShift);
-  addUserBadge(userName, shifts);
-  console.log(newSholet);
+  addUserBadge(userName, shifts, maxShift);
+
   // Append values to arrays
   namesArray.push(userName);
   maxShifts.push(maxShift);
   sholtimObjectArray.push(newSholet);
 
+  // Save arrays back to localStorage
+  localStorage.setItem("namesArray", JSON.stringify(namesArray));
+  localStorage.setItem("maxShifts", JSON.stringify(maxShifts));
+  localStorage.setItem(
+    "sholtimObjectArray",
+    JSON.stringify(sholtimObjectArray)
+  );
+
   // Reset form fields
   $("#userName").val("");
   $("#maxShifts").val("");
   generateGraph();
-  if (localStorage.getItem(click)) {
-    localStorage.setItem(click, Number(localStorage.getItem(click)) + 1);
-  } else {
-    localStorage.setItem(click, 1);
-  }
 }
 
 function generateGraph() {
@@ -140,8 +193,9 @@ function getCheckboxValues() {
   return checkboxValues;
 }
 
-function addUserBadge(userName, userShifts) {
-  let dayShifts = "";
+function addUserBadge(userName, userShifts, maxS) {
+  console.log("max: " + maxS);
+  let dayShifts = "Max Shifts: " + maxS + " ||| ";
 
   for (let j = 0; j < userShifts.length; j++) {
     if (userShifts[j] == 1) {
@@ -183,6 +237,14 @@ function removeUser(el) {
     namesArray.splice(index, 1);
     maxShifts.splice(index, 1);
     sholtimObjectArray.splice(index, 1);
+
+    // Save arrays back to localStorage
+    localStorage.setItem("namesArray", JSON.stringify(namesArray));
+    localStorage.setItem("maxShifts", JSON.stringify(maxShifts));
+    localStorage.setItem(
+      "sholtimObjectArray",
+      JSON.stringify(sholtimObjectArray)
+    );
   }
   $(el).parent().remove();
   // Update the graph
@@ -210,5 +272,15 @@ function checkAll(el) {
 }
 
 function localStorageClear() {
-  localStorage.clear();
+  // Show confirmation modal
+  $("#confirmClearModal").modal("show");
+
+  // Handle clear action on confirmation
+  $("#confirmClearBtn").click(function () {
+    localStorage.clear();
+    Array.from($("#sigend-user-container button")).forEach((el) => {
+      removeUser(el);
+    });
+    location.reload();
+  });
 }

@@ -1,7 +1,36 @@
 let numOfSholtim, numOfShifts;
 let notValid;
+let toggelWeekView = true;
+let succesGenerate = false;
+const shiftsNamesShort = [
+  "S1",
+  "S2",
+  "S3",
+  "M1",
+  "M2",
+  "M3",
+  "T1",
+  "T2",
+  "T3",
+  "W1",
+  "W2",
+  "W3",
+  "Th1",
+  "Th2",
+  "Th3",
+  "F1",
+  "F2",
+  "F3",
+  "Sa1",
+  "Sa2",
+  "Sa3",
+];
 
 function generate() {
+  if (succesGenerate) {
+    $("#sholtim-container").empty();
+    $("#shift-container").empty();
+  }
   let numOfSholtim = namesArray.length;
   let numOfShifts = shiftNeeds.length;
   notValid = false;
@@ -33,12 +62,14 @@ function generate() {
     return;
   }
   showToast("SUCCESS! ", false);
+  succesGenerate = true;
   for (let i = 0; i < numOfSholtim; i++) {
     let validShifts = [];
     validShifts = sholetShifts(i, numOfShifts, numOfSholtim);
     let count = validShifts.filter((shift) => shift === 1).length;
     userDisplay(i, count, validShifts);
   }
+  shiftDisplay();
 }
 
 // Returns true if there is a path from source
@@ -213,36 +244,53 @@ function userDisplay(i, count, validShifts) {
     }
   }
 }
-function shiftDisplay(i, count, validShifts) {
+
+function shiftDisplay() {
   let numOfShifts = shiftNeeds.length;
-  const newSholetElemnt = $(
-    '<div id="sholet-' +
-      i +
-      '" style="display: flex; flex-direction: column"' +
-      'class="p-3">' +
-      '<button type="button" class="btn btn-dark position-relative px-5">' +
-      '<span class="name">' +
-      namesArray[i] +
-      "</span>" +
-      '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">' +
-      count +
-      "</span>" +
-      "</button>" +
-      '<ul class="list-group">' +
-      "</ul>" +
-      "</div>"
-  );
+  let numOfSholtim = namesArray.length;
+  for (let i = 0; i < numOfShifts; i++) {
+    const newShiftElemnt = $(
+      '<div id="shift-' +
+        i +
+        '" style="width:4% ;display: flex; flex-direction: column ;" class="">' +
+        '<button type="button" class="btn btn-dark">' +
+        '<span class="name" >' +
+        shiftsNamesShort[i] +
+        "</span>" +
+        "</button>" +
+        '<ul class="list-group">' +
+        "</ul>" +
+        "</div>"
+    );
 
-  // Appending the new element to the parent container
-  $("#sholtim-container").append(newSholetElemnt);
+    // Appending the new element to the parent container
+    $("#shift-container").append(newShiftElemnt);
 
-  // Update shift list
-  for (let j = 0; j < numOfShifts; j++) {
-    if (validShifts.length > 0 && validShifts[j] === 1) {
-      const newSholetShiftsListElemnt = $(
-        '<li class="list-group-item ">' + shiftsNames[j] + "</li>"
-      );
-      $("#sholet-" + i + "> .list-group").append(newSholetShiftsListElemnt);
+    // Update sholtim list
+
+    for (let j = 1; j <= numOfSholtim; j++) {
+      if (rGraph[numOfSholtim + 1 + i][j] === 1) {
+        const newShiftSholtimListElemnt = $(
+          '<li class="list-group-item" style="font-size: 0.8rem">' +
+            namesArray[j - 1] +
+            "</li>"
+        );
+        $("#shift-" + i + "> .list-group").append(newShiftSholtimListElemnt);
+      }
     }
   }
 }
+
+function toggelWeekDisplay() {
+  toggelWeekView = !toggelWeekView;
+  if (toggelWeekView) {
+    $("#sholtim-container").attr("style", "display: none !important;");
+    $("#shift-container").attr("style", "");
+  } else {
+    $("#sholtim-container").attr("style", "");
+    $("#shift-container").attr("style", "display: none !important;");
+  }
+}
+
+// Initially hide one of the views
+$("#sholtim-container").attr("style", "display: none !important;");
