@@ -45,20 +45,20 @@ function generate() {
   console.log("rGraph:", rGraph);
   console.log("Graph:", graph);
   fordFulkerson(0, Vertix - 1);
-  for (let j = 0; j < Vertix; j++) {
-    if (rGraph[j][Vertix - 1] > 0) {
+  for (let j = 0; j < numOfShifts; j++) {
+    if (rGraph[j + numOfSholtim * 8 + 1][Vertix - 1] > 0) {
       showToast(
         "ERROR! we are missing " +
-          rGraph[j][Vertix - 1] +
+          rGraph[j + numOfSholtim * 8 + 1][Vertix - 1] +
           " sholtim at " +
-          shiftsNames[j - 1 - numOfSholtim],
+          shiftsNames[j],
         true
       );
       console.log(
-        " ERROR! we are missing " +
-          rGraph[j][Vertix - 1] +
+        "ERROR! we are missing " +
+          rGraph[j + numOfSholtim * 8 + 1][Vertix - 1] +
           " sholtim at " +
-          shiftsNames[j - 1 - numOfSholtim]
+          shiftsNames[j]
       );
       notValid = true;
     }
@@ -164,8 +164,8 @@ function fordFulkerson(s, t) {
     for (let i = 0; i < rGraph.length; i++) {
       tempGraph[i] = rGraph[i].slice();
     }
-    console.log("real rGraph:", tempGraph);
-    orderByRatio(tempGraph);
+    // console.log("real rGraph:", tempGraph);
+    // orderByRatio(tempGraph);
   }
   // Return the overall flow
   return max_flow;
@@ -208,8 +208,16 @@ function orderByRatio(tempGraph) {
 
 function sholetShifts(i, numOfShifts, numOfSholtim) {
   let shiftsToDisplay = [];
+  let totalWeekSpacer = 7 * namesArray.length;
+  let weekSpacer = 7 * i;
   for (let j = 0; j < numOfShifts; j++) {
-    shiftsToDisplay.push(rGraph[j + 1 + numOfSholtim][i + 1]);
+    for (let d = 1; d <= 7; d++) {
+      shiftsToDisplay.push(
+        rGraph[j + 1 + numOfSholtim + totalWeekSpacer][
+          weekSpacer + numOfSholtim + d
+        ]
+      );
+    }
   }
 
   return shiftsToDisplay;
@@ -259,7 +267,6 @@ function showToast(message, isError = false) {
 }
 
 function userDisplay(i, count, validShifts) {
-  let numOfShifts = shiftNeeds.length;
   const newSholetElemnt = $(
     '<div id="sholet-' +
       i +
@@ -282,10 +289,12 @@ function userDisplay(i, count, validShifts) {
   $("#sholtim-container").append(newSholetElemnt);
 
   // Update shift list
-  for (let j = 0; j < numOfShifts; j++) {
-    if (validShifts.length > 0 && validShifts[j] === 1) {
+  for (let j = 0; j < validShifts.length; j++) {
+    if (validShifts[j] === 1) {
       const newSholetShiftsListElemnt = $(
-        '<li class="list-group-item ">' + shiftsNames[j] + "</li>"
+        '<li class="list-group-item ">' +
+          shiftsNames[Math.floor(j / 7)] +
+          "</li>"
       );
       $("#sholet-" + i + "> .list-group").append(newSholetShiftsListElemnt);
     }
@@ -315,11 +324,11 @@ function shiftDisplay() {
 
     // Update sholtim list
 
-    for (let j = 1; j <= numOfSholtim; j++) {
-      if (rGraph[numOfSholtim + 1 + i][j] === 1) {
+    for (let j = 1; j <= numOfSholtim * 7; j++) {
+      if (rGraph[numOfSholtim * 8 + 1 + i][j + numOfSholtim] === 1) {
         const newShiftSholtimListElemnt = $(
           '<li class="list-group-item" style="font-size: 0.8rem">' +
-            namesArray[j - 1] +
+            namesArray[Math.floor((j - 1) / 7)] +
             "</li>"
         );
         $("#shift-" + i + "> .list-group").append(newShiftSholtimListElemnt);

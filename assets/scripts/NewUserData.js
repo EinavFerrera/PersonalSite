@@ -156,25 +156,34 @@ function buildGraph() {
   console.log("maxShifts:", maxShifts);
 
   let graph = [];
-  Vertix = namesArray.length + shiftNeeds.length + 2;
+  Vertix = namesArray.length * 8 + shiftNeeds.length + 2;
 
   // Initialize graph with zeros
-  for (let i = 0; i < Vertix; i++) {
-    graph[i] = new Array(Vertix).fill(0);
+  for (let t = 0; t < Vertix; t++) {
+    graph[t] = new Array(Vertix).fill(0);
   }
-
   // Build the graph based on user data
   for (let i = 0; i < namesArray.length; i++) {
     // Connect source to sholtim
     graph[0][i + 1] = maxShifts[i];
-    // Connect sholtim to shifts
+    weekSpacer = 7 * i;
+    totalWeekSpacer = 7 * namesArray.length;
+
+    //Connect sholet to day vertix
+    for (let d = 1; d <= 7; d++) {
+      graph[i + 1][weekSpacer + namesArray.length + d] = 1;
+    }
+    // Connect day vertix to shifts
     for (let j = 0; j < shiftNeeds.length; j++) {
-      graph[i + 1][j + 1 + namesArray.length] = sholtimObjectArray[i].shifts[j];
+      graph[weekSpacer + 1 + namesArray.length + Math.floor(j / 3)][
+        j + 1 + namesArray.length + totalWeekSpacer
+      ] = sholtimObjectArray[i].shifts[j];
     }
   }
   // Connect shifts to sink
-  for (let j = 0; j < shiftNeeds.length; j++) {
-    graph[j + 1 + namesArray.length][Vertix - 1] = shiftNeeds[j];
+  for (let q = 0; q < shiftNeeds.length; q++) {
+    graph[q + 1 + totalWeekSpacer + namesArray.length][Vertix - 1] =
+      shiftNeeds[q];
   }
   return graph;
 }
@@ -249,6 +258,8 @@ function removeUser(el) {
   $(el).parent().remove();
   // Update the graph
   generateGraph();
+  rGraph.fill(0);
+  location.reload();
 }
 
 function checkAll(el) {
