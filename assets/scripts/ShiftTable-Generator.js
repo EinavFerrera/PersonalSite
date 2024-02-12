@@ -1,5 +1,6 @@
 let numOfSholtim, numOfShifts;
 let notValid;
+let originalNameArray = [];
 let toggelWeekView = true;
 let succesGenerate = false;
 const shiftsNamesShort = [
@@ -30,6 +31,9 @@ function generate() {
   if (succesGenerate) {
     $("#sholtim-container").empty();
     $("#shift-container").empty();
+    namesArray = originalNameArray.slice();
+  } else {
+    originalNameArray = namesArray.slice();
   }
   let numOfSholtim = namesArray.length;
   let numOfShifts = shiftNeeds.length;
@@ -38,8 +42,9 @@ function generate() {
     rGraph[u] = new Array(Vertix);
     for (v = 0; v < Vertix; v++) rGraph[u][v] = graph[u][v];
   }
-  fordFulkerson(0, Vertix - 1);
   console.log("rGraph:", rGraph);
+  console.log("Graph:", graph);
+  fordFulkerson(0, Vertix - 1);
   for (let j = 0; j < Vertix; j++) {
     if (rGraph[j][Vertix - 1] > 0) {
       showToast(
@@ -154,9 +159,51 @@ function fordFulkerson(s, t) {
 
     // Add path flow to overall flow
     max_flow += path_flow;
+
+    let tempGraph = [];
+    for (let i = 0; i < rGraph.length; i++) {
+      tempGraph[i] = rGraph[i].slice();
+    }
+    console.log("real rGraph:", tempGraph);
+    orderByRatio(tempGraph);
   }
   // Return the overall flow
   return max_flow;
+}
+
+function orderByRatio(tempGraph) {
+  let sholetRatio = [];
+  for (let i = 1; i <= namesArray.length; i++) {
+    let newSholetRatioObj = {
+      id: namesArray[i - 1],
+      ratio: rGraph[0][i] / (rGraph[0][i] + rGraph[i][0]),
+      max_shifts: maxShifts[i - 1],
+    };
+    sholetRatio.push(newSholetRatioObj);
+  }
+  let newOrder = sholetRatio.toSorted(() => Math.random() - 0.5);
+  newOrder.sort((a, b) => a.ratio - b.ratio).reverse();
+
+  sholetRatio.forEach((element) => {
+    let newIndex = newOrder.findIndex((object) => {
+      return object.id === element.id;
+    });
+    let oldIndex = sholetRatio.indexOf(element);
+
+    rGraph[newIndex + 1] = tempGraph[oldIndex + 1].slice();
+    for (let j = 0; j < Vertix; j++) {
+      rGraph[j][newIndex + 1] = tempGraph[j][oldIndex + 1];
+    }
+    namesArray[newIndex] = element.id;
+    maxShifts[newIndex] = element.max_shifts;
+
+    tempArray = namesArray.slice();
+    console.log("namesArray:", tempArray);
+    tempArray = maxShifts.slice();
+    console.log("maxShifts:", tempArray);
+  });
+  console.log("sholetRatio:", sholetRatio);
+  console.log("newOrder:", newOrder);
 }
 
 function sholetShifts(i, numOfShifts, numOfSholtim) {
