@@ -10,8 +10,8 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="../assets/styles/KOSEM-style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
     <link rel="stylesheet" href="../style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -799,25 +799,30 @@
     <section class="signed-users">
       <div
         id="sigend-user-container"
-        class="d-flex gap-2 justify-content-center py-5"
+        class="d-flex flex-wrap gap-2 justify-content-center py-5"
       ></div>
     </section>
 
     <section class="shift-table-generator">
       <div class="d-flex justify-content-center align-items-center text-center">
         <button
-          class="btn btn-dark mouseo py-2 fs-4"
+          class="btn btn-dark mouseo py-2 fs-4 position-relative"
           style="padding: 0% 10%"
-          onclick="generate()"
+          onclick="generateConfirmation()"
         >
-          generate
-        </button>
-        <button
-          class="btn btn-dark mouseo py-2 fs-4"
-          onclick="burdenSharing()"
-          style="padding: 0% 10%; display: none"
-        >
-          optimize
+          <span> generate </span>
+          <span
+            role="button"
+            id="toggel-error-view"
+            class="btn btn-dark position-absolute top-50 start-0 translate-middle rounded-pill fs-4"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseExample"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+            onclick="event.stopPropagation();"
+          >
+            !
+          </span>
         </button>
         <span
           class="badge d-flex p-2 text-center text-dark-emphasis bg-dark-subtle rounded-pill m-2"
@@ -833,6 +838,7 @@
           ></button>
         </span>
       </div>
+
       <!-- Button for toggling views -->
       <div class="d-flex justify-content-center">
         <div class="form-check form-switch">
@@ -847,23 +853,26 @@
           >
         </div>
       </div>
+      <div class="collapse" id="collapseExample">
+        <div class="card card-body text-center" style="width: 50%; left: 25%">
+          <ul style="list-style-type: none"></ul>
+        </div>
+      </div>
+      <!-- Sholet Shifts Display -->
       <div
         id="sholtim-container"
         class="d-flex flex-row flex-wrap mb-3 pb-4 pt-3 justify-content-around"
-      >
-        <!-- Sholet Shifts Display -->
-      </div>
+      ></div>
+      <!-- Shift Sholtim Display -->
       <div
         id="shift-container"
         class="d-flex flex-row flex-wrap mb-3 pb-4 pt-3 justify-content-around"
-      >
-        <!-- Shift Sholtim Display -->
-      </div>
+      ></div>
     </section>
 
     <section class="Pop-Ups">
       <div class="toast-container position-fixed bottom-0 end-0"></div>
-      <!-- Confirmation Modal -->
+      <!-- Clear all data base Modal -->
       <div
         class="modal fade"
         id="confirmClearModal"
@@ -901,6 +910,51 @@
                 id="confirmClearBtn"
               >
                 2,3..Shwa-ger
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- re-generate on a perfect table -->
+      <div
+        class="modal fade"
+        id="confirmGenerateModal"
+        tabindex="-1"
+        aria-labelledby="confirmGenerateModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="confirmGenerateModalLabel">
+                such a shame.. its a beautiful Table...
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              Are you sure you want to re-Generate a table?
+              <br />The current table will not be visiable anymore.
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+                id="confirmGenerateBtn"
+              >
+                Rashay
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+              >
+                Hadal
               </button>
             </div>
           </div>

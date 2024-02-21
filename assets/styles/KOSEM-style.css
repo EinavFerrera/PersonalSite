@@ -1,0 +1,12 @@
+#toggel-error-view {
+  background-color: #3c2426;
+  border: solid 2px #38040e !important;
+
+  left: -30px !important;
+  opacity: 0; /* Initially set opacity to 0 */
+  transition: opacity 0.5s ease-in-out; /* Add a transition for smooth animation */
+}
+
+.visible {
+  opacity: 1 !important; /* Make the element visible by changing opacity to 1 */
+}

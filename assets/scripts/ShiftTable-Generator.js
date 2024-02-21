@@ -1,6 +1,9 @@
 let numOfSholtim, numOfShifts;
 let notValid;
+let perfectTable = false;
 let originalNameArray = [];
+let totalWeekSpacer;
+let weekSpacer;
 let toggelWeekView = true;
 let succesGenerate = false;
 const shiftsNamesShort = [
@@ -27,14 +30,27 @@ const shiftsNamesShort = [
   "Sa3",
 ];
 
-function generate() {
-  if (succesGenerate) {
+function generateConfirmation() {
+  if (perfectTable) {
+    $("#confirmGenerateModal").modal("show");
+    // Handle clear action on confirmation
+    $("#confirmGenerateBtn").click(function () {
+      $("#sholtim-container").empty();
+      $("#shift-container").empty();
+      perfectTable = false;
+      generate();
+    });
+  } else if (succesGenerate) {
     $("#sholtim-container").empty();
     $("#shift-container").empty();
-    namesArray = originalNameArray.slice();
+    generate();
   } else {
-    originalNameArray = namesArray.slice();
+    generate();
   }
+}
+
+function generate() {
+  generateGraph();
   let numOfSholtim = namesArray.length;
   let numOfShifts = shiftNeeds.length;
   notValid = false;
@@ -42,11 +58,20 @@ function generate() {
     rGraph[u] = new Array(Vertix);
     for (v = 0; v < Vertix; v++) rGraph[u][v] = graph[u][v];
   }
-  console.log("rGraph:", rGraph);
-  console.log("Graph:", graph);
+
   fordFulkerson(0, Vertix - 1);
   for (let j = 0; j < numOfShifts; j++) {
     if (rGraph[j + numOfSholtim * 8 + 1][Vertix - 1] > 0) {
+      if (notValid === false) {
+        $("#collapseExample > div > ul").children("li").remove();
+        const newLiElement = $(
+          "<li style='font-weight:bold; text-decoration:underline;'>" +
+            "MISSING:" +
+            "</li>"
+        );
+        $("#collapseExample > div > ul").append(newLiElement);
+        $("#toggel-error-view").addClass("visible");
+      }
       showToast(
         "ERROR! we are missing " +
           rGraph[j + numOfSholtim * 8 + 1][Vertix - 1] +
@@ -54,12 +79,14 @@ function generate() {
           shiftsNames[j],
         true
       );
-      console.log(
-        "ERROR! we are missing " +
+      const newLiElement = $(
+        "<li>" +
           rGraph[j + numOfSholtim * 8 + 1][Vertix - 1] +
           " sholtim at " +
-          shiftsNames[j]
+          shiftsNames[j] +
+          "</li>"
       );
+      $("#collapseExample > div > ul").append(newLiElement);
       notValid = true;
     }
   }
@@ -67,7 +94,14 @@ function generate() {
     return;
   }
   showToast("SUCCESS! ", false);
+
+  if (checkIntegrity() === false) {
+    $("#collapseExample").collapse("hide");
+    $("#toggel-error-view").removeClass("visible");
+    perfectTable = true;
+  }
   succesGenerate = true;
+
   for (let i = 0; i < numOfSholtim; i++) {
     let validShifts = [];
     validShifts = sholetShifts(i, numOfShifts, numOfSholtim);
@@ -164,52 +198,89 @@ function fordFulkerson(s, t) {
     for (let i = 0; i < rGraph.length; i++) {
       tempGraph[i] = rGraph[i].slice();
     }
-    // console.log("real rGraph:", tempGraph);
-    // orderByRatio(tempGraph);
+    orderByRatio(tempGraph);
   }
   // Return the overall flow
   return max_flow;
 }
 
 function orderByRatio(tempGraph) {
+  numOfSholtim = namesArray.length;
+  weekSpacer = 7;
+
+  //Get the Ratio of each Sholet
   let sholetRatio = [];
-  for (let i = 1; i <= namesArray.length; i++) {
+  for (let i = 1; i <= numOfSholtim; i++) {
     let newSholetRatioObj = {
-      id: namesArray[i - 1],
+      id: i,
       ratio: rGraph[0][i] / (rGraph[0][i] + rGraph[i][0]),
-      max_shifts: maxShifts[i - 1],
+      max_shifts: rGraph[0][i] + rGraph[i][0],
     };
     sholetRatio.push(newSholetRatioObj);
   }
+  //randomize the order and than sort it by the ratio where the lowest ratio will be first
   let newOrder = sholetRatio.toSorted(() => Math.random() - 0.5);
   newOrder.sort((a, b) => a.ratio - b.ratio).reverse();
 
+  for (let j = numOfSholtim + 1; j <= 8 * numOfSholtim; j++) {
+    tempGraph[j][1] = rGraph[j][1];
+  }
   sholetRatio.forEach((element) => {
-    let newIndex = newOrder.findIndex((object) => {
-      return object.id === element.id;
-    });
-    let oldIndex = sholetRatio.indexOf(element);
+    let newIndex =
+      1 +
+      newOrder.findIndex((object) => {
+        return object.id === element.id;
+      });
+    let oldIndex = 1 + sholetRatio.indexOf(element);
 
-    rGraph[newIndex + 1] = tempGraph[oldIndex + 1].slice();
-    for (let j = 0; j < Vertix; j++) {
-      rGraph[j][newIndex + 1] = tempGraph[j][oldIndex + 1];
+    // sets the new rGraph - row swap
+    rGraph[newIndex] = tempGraph[oldIndex].slice();
+
+    // sets the new rGraph - column swap
+    for (let i = 0; i < Vertix; i++) {
+      rGraph[i][newIndex] = tempGraph[i][oldIndex];
     }
-    namesArray[newIndex] = element.id;
-    maxShifts[newIndex] = element.max_shifts;
-
-    tempArray = namesArray.slice();
-    console.log("namesArray:", tempArray);
-    tempArray = maxShifts.slice();
-    console.log("maxShifts:", tempArray);
   });
-  console.log("sholetRatio:", sholetRatio);
-  console.log("newOrder:", newOrder);
+}
+
+function orderByRandom(tempGraph) {
+  numOfSholtim = namesArray.length;
+  weekSpacer = 7;
+
+  //Get the Ratio of each Sholet
+  let sholetRatio = [];
+  for (let i = 1; i <= namesArray.length; i++) {
+    let newSholetRatioObj = {
+      id: i,
+      ratio: rGraph[0][i] / (rGraph[0][i] + rGraph[i][0]),
+      max_shifts: rGraph[0][i] + rGraph[i][0],
+    };
+    sholetRatio.push(newSholetRatioObj);
+  }
+  //randomize the order and than sort it by the ratio where the lowest ratio will be first
+  let newOrder = sholetRatio.toSorted(() => Math.random() - 0.5);
+  sholetRatio.forEach((element) => {
+    let newIndex =
+      1 +
+      newOrder.findIndex((object) => {
+        return object.id === element.id;
+      });
+    let oldIndex = 1 + sholetRatio.indexOf(element);
+
+    // sets the new rGraph - row swap
+    rGraph[newIndex] = tempGraph[oldIndex].slice();
+
+    // sets the new rGraph - column swap
+    for (let i = 0; i < Vertix; i++) {
+      rGraph[i][newIndex] = tempGraph[i][oldIndex];
+    }
+  });
 }
 
 function sholetShifts(i, numOfShifts, numOfSholtim) {
   let shiftsToDisplay = [];
-  let totalWeekSpacer = 7 * namesArray.length;
-  let weekSpacer = 7 * i;
+  totalWeekSpacer = 7 * namesArray.length;
+  weekSpacer = 7 * i;
   for (let j = 0; j < numOfShifts; j++) {
     for (let d = 1; d <= 7; d++) {
       shiftsToDisplay.push(
@@ -346,6 +417,55 @@ function toggelWeekDisplay() {
     $("#sholtim-container").attr("style", "");
     $("#shift-container").attr("style", "display: none !important;");
   }
+}
+
+function checkIntegrity() {
+  let integrityFound = false;
+  weekSpacer = 7;
+  $("#collapseExample > div > ul").children("li").remove();
+  const newLiElement = $(
+    "<li style='font-weight:bold; text-decoration:underline;'>" +
+      "CONFLICTS:" +
+      "</li>"
+  );
+  $("#collapseExample > div > ul").append(newLiElement);
+
+  for (let i = 0; i < numOfSholtim; i++) {
+    //checks for each sholet
+    for (let j = 0; j < 21; j++) {
+      //checks 19 shifts with 2 shifts ahead
+      for (let t = 0; t < 5; t++) {
+        //checks the entire shift row (only 1 bit sßhold be active each row)
+        for (let p = 1; p <= 2; p++) {
+          //checks the 2 rows beaneth
+          for (let f = 2; f <= 3; f++) {
+            //checks the 3 bit in that row beaneth are also 1
+            if (
+              rGraph[Vertix - 22 + j][1 + numOfSholtim + t + i * weekSpacer] ===
+                1 &&
+              rGraph[Vertix - 22 + p + j][
+                f + numOfSholtim + t + i * weekSpacer
+              ] === 1
+            ) {
+              const newLiElement = $(
+                "<li>" +
+                  namesArray[i] +
+                  " has conflict in: " +
+                  shiftsNames[j] +
+                  " and " +
+                  shiftsNames[j + p] +
+                  "</li>"
+              );
+              $("#collapseExample > div > ul").append(newLiElement);
+              $("#toggel-error-view").addClass("visible");
+              integrityFound = true;
+            }
+          }
+        }
+      }
+    }
+  }
+  return integrityFound;
 }
 
 // Initially hide one of the views

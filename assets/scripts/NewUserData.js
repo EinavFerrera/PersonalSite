@@ -144,7 +144,7 @@ function generateGraph() {
   }
 
   // Build the graph
-  graph = buildGraph(shiftNeeds);
+  graph = buildGraph();
 
   // Log the generated graph
   console.log(graph);
