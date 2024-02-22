@@ -805,25 +805,56 @@
 
     <section class="shift-table-generator">
       <div class="d-flex justify-content-center align-items-center text-center">
-        <button
-          class="btn btn-dark mouseo py-2 fs-4 position-relative"
-          style="padding: 0% 10%"
-          onclick="generateConfirmation()"
-        >
-          <span> generate </span>
-          <span
-            role="button"
-            id="toggel-error-view"
-            class="btn btn-dark position-absolute top-50 start-0 translate-middle rounded-pill fs-4"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseExample"
-            aria-expanded="false"
-            aria-controls="collapseExample"
-            onclick="event.stopPropagation();"
+        <div class="btn-group dropend">
+          <button
+            class="btn btn-dark mouseo py-2 fs-4 position-relative"
+            style="width: 20rem"
+            onclick="generateConfirmation($('#autoRunInput').val())"
           >
-            !
-          </span>
-        </button>
+            <span> generate </span>
+            <span
+              role="button"
+              id="toggel-error-view"
+              class="btn btn-dark position-absolute top-50 start-0 translate-middle rounded-pill fs-4"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseExample"
+              aria-expanded="false"
+              aria-controls="collapseExample"
+              onclick="event.stopPropagation();"
+            >
+              !
+            </span>
+            <button
+              type="button"
+              class="btn btn-dark dropdown-toggle dropdown-toggle-split"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <span class="visually-hidden">Toggle Dropend</span>
+            </button>
+          </button>
+          <div
+            class="dropdown-menu w-25"
+            style="background-color: rgba(0, 0, 0, 0); border: 0px"
+          >
+            <div class="input-group mb-3">
+              <span
+                class="input-group-text mouseo"
+                id="inputGroup-sizing-default"
+                >AutoRun</span
+              >
+              <input
+                id="autoRunInput"
+                type="text"
+                class="form-control"
+                aria-label="AutoRun input"
+                aria-describedby="inputGroup-sizing-default"
+                value="1"
+              />
+            </div>
+          </div>
+        </div>
+
         <span
           class="badge d-flex p-2 text-center text-dark-emphasis bg-dark-subtle rounded-pill m-2"
           data-bs-toggle="popover"
@@ -1001,8 +1032,8 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
-    <script src="../assets/scripts/NewUserData.js"></script>
-    <script src="../assets/scripts/ShiftTable-Generator.js"></script>
-    <script src="../assets/scripts/optimizer.js"></script>
+    <script src="../assets/scripts/Kosem- Variable.js"></script>
+    <script src="../assets/scripts/Kosem- New User.js"></script>
+    <script src="../assets/scripts/Kosem- Table Generator.js"></script>
   </body>
 </html>

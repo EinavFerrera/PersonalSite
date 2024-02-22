@@ -1,37 +1,23 @@
-let numOfSholtim, numOfShifts;
-let notValid;
-let perfectTable = false;
-let originalNameArray = [];
-let totalWeekSpacer;
-let weekSpacer;
-let toggelWeekView = true;
-let succesGenerate = false;
-const shiftsNamesShort = [
-  "S1",
-  "S2",
-  "S3",
-  "M1",
-  "M2",
-  "M3",
-  "T1",
-  "T2",
-  "T3",
-  "W1",
-  "W2",
-  "W3",
-  "Th1",
-  "Th2",
-  "Th3",
-  "F1",
-  "F2",
-  "F3",
-  "Sa1",
-  "Sa2",
-  "Sa3",
-];
+/**
+ * first function when you run a generate request
+ * cheks if there is a table already - if so it will ask for a confirmation / resets the display
+ * if not it will generate the table
+ */
 
-function generateConfirmation() {
-  if (perfectTable) {
+function generateConfirmation(timesToRun) {
+  if (typeof timesToRun != "number") {
+    timesToRun = Number(timesToRun);
+  }
+  if (typeof timesToRun != "number") {
+    timesToRun = 0;
+  }
+  console.log(timesToRun);
+  if (timesToRun > 1 && !perfectTable) {
+    $("#sholtim-container").empty();
+    $("#shift-container").empty();
+    generate();
+    generateConfirmation(timesToRun - 1);
+  } else if (perfectTable) {
     $("#confirmGenerateModal").modal("show");
     // Handle clear action on confirmation
     $("#confirmGenerateBtn").click(function () {
@@ -40,6 +26,7 @@ function generateConfirmation() {
       perfectTable = false;
       generate();
     });
+    console.log("perfectTable: ", timesToRun);
   } else if (succesGenerate) {
     $("#sholtim-container").empty();
     $("#shift-container").empty();
@@ -48,18 +35,26 @@ function generateConfirmation() {
     generate();
   }
 }
-
+/**
+ * makes an attempt to generate a valid table (where all shifts are covered)
+ * if successful it will display the table and the conflicts (if any) in the error view
+ * else it will display the missing shifts with popups and in the error view
+ * @returns void when not valid to stop generating
+ */
 function generate() {
-  generateGraph();
+  //initializtions
   let numOfSholtim = namesArray.length;
   let numOfShifts = shiftNeeds.length;
   notValid = false;
+  generateGraph();
   for (u = 0; u < Vertix; u++) {
     rGraph[u] = new Array(Vertix);
     for (v = 0; v < Vertix; v++) rGraph[u][v] = graph[u][v];
   }
-
+  //makes the graph with the max flow (maxium flow == all shifts are covered)
   fordFulkerson(0, Vertix - 1);
+
+  //checks if there is a shifts with less sholtim than needed
   for (let j = 0; j < numOfShifts; j++) {
     if (rGraph[j + numOfSholtim * 8 + 1][Vertix - 1] > 0) {
       if (notValid === false) {
@@ -93,15 +88,17 @@ function generate() {
   if (notValid === true) {
     return;
   }
+  //if all shifts are covered
   showToast("SUCCESS! ", false);
+  succesGenerate = true;
 
+  //gains the conflicts (if any)
   if (checkIntegrity() === false) {
     $("#collapseExample").collapse("hide");
     $("#toggel-error-view").removeClass("visible");
     perfectTable = true;
   }
-  succesGenerate = true;
-
+  //display the table
   for (let i = 0; i < numOfSholtim; i++) {
     let validShifts = [];
     validShifts = sholetShifts(i, numOfShifts, numOfSholtim);
@@ -111,9 +108,13 @@ function generate() {
   shiftDisplay();
 }
 
-// Returns true if there is a path from source
-// 's' to sink 't' in residual graph. Also
-// fills parent[] to store the path
+/**
+ * a part of the fordFulkerson algorithm - finds a path
+ * @param {*} s starting vertix (usually 0)
+ * @param {*} t ending vertix (usually Vertix - 1)
+ * @param {*} parent array to store the path found to increase the flow
+ * @returns true if there is a path from source 's' to sink 't' in residual graph.
+ */
 function bfs(s, t, parent) {
   // Create a visited array and mark all vertices as not visited
   let visited = new Array(Vertix);
@@ -151,8 +152,12 @@ function bfs(s, t, parent) {
   return false;
 }
 
-// Returns the maximum flow from s to t in
-// the given graph
+/**
+ *
+ * @param {*} s starting vertix (usually 0)
+ * @param {*} t ending vertix (usually Vertix - 1)
+ * @returns the maximum flow from s to t in the given graph
+ */
 function fordFulkerson(s, t) {
   // Create a residual graph and fill the
   // residual graph with given capacities
@@ -203,7 +208,11 @@ function fordFulkerson(s, t) {
   // Return the overall flow
   return max_flow;
 }
-
+/**
+ * orders the sholtim by the ratio of the shifts they are covering - to make sure the shifts are splitted evenly
+ * !Also uses a Random before ordering! what makes table unique each time
+ * @param {*} tempGraph a deep copy of the rGraph to manipulate
+ */
 function orderByRatio(tempGraph) {
   numOfSholtim = namesArray.length;
   weekSpacer = 7;
@@ -242,7 +251,11 @@ function orderByRatio(tempGraph) {
     }
   });
 }
-
+/**
+ * !Not in use in Version 1.0!
+ * order the sholtim by a random order
+ * @param {*} tempGraph a deep copy of the rGraph to manipulate
+ */
 function orderByRandom(tempGraph) {
   numOfSholtim = namesArray.length;
   weekSpacer = 7;
@@ -277,6 +290,13 @@ function orderByRandom(tempGraph) {
   });
 }
 
+/**
+ * Retrieves the shifts covered by a specific sholet.
+ * @param {number} i - The index of the sholtim.
+ * @param {number} numOfShifts - The total number of shifts.
+ * @param {number} numOfSholtim - The total number of sholtim.
+ * @returns {Array} Returns an array of shifts covered by the sholtim.
+ */
 function sholetShifts(i, numOfShifts, numOfSholtim) {
   let shiftsToDisplay = [];
   totalWeekSpacer = 7 * namesArray.length;
@@ -294,6 +314,10 @@ function sholetShifts(i, numOfShifts, numOfSholtim) {
   return shiftsToDisplay;
 }
 
+/**
+ * Calculates the sum of the target shifts.
+ * @returns {number} Returns the sum of the target shifts.
+ */
 function sumTarget() {
   let sum = 0;
   for (let j = 0; j < numOfShifts; j++) {
@@ -302,6 +326,12 @@ function sumTarget() {
   return sum;
 }
 
+/**
+ * Displays a toast message.
+ * @param {string} message - The message to display.
+ * @param {boolean} isError - Indicates if the message is an error message (default: false).
+ * @returns {void} Returns nothing.
+ */
 function showToast(message, isError = false) {
   const toastContainer = $(".toast-container");
 
@@ -337,6 +367,12 @@ function showToast(message, isError = false) {
   toast.show();
 }
 
+/**
+ * Displays the table in a Sholet view - where each sholet name is followed by his shifts
+ * @param {number} i - The index of the Sholet in the nameArray.
+ * @param {number} count - The count of shifts.
+ * @param {number[]} validShifts - An array representing the validity of shifts.
+ */
 function userDisplay(i, count, validShifts) {
   const newSholetElemnt = $(
     '<div id="sholet-' +
@@ -372,6 +408,9 @@ function userDisplay(i, count, validShifts) {
   }
 }
 
+/**
+ * Displays the table in a shift vew - shifts are followed by the name of the sholtim list on it
+ */
 function shiftDisplay() {
   let numOfShifts = shiftNeeds.length;
   let numOfSholtim = namesArray.length;
@@ -408,6 +447,9 @@ function shiftDisplay() {
   }
 }
 
+/**
+ * Controls the display - Shift view / Sholet view
+ */
 function toggelWeekDisplay() {
   toggelWeekView = !toggelWeekView;
   if (toggelWeekView) {
@@ -419,6 +461,11 @@ function toggelWeekDisplay() {
   }
 }
 
+/**
+ * Checks the integrity of the shift table by searching for conflicts between shifts.
+ * if a sholet has a shift with a shift in the next shift/next next shift - its a conflict
+ * @returns {boolean} True if conflicts are found, false otherwise.
+ */
 function checkIntegrity() {
   let integrityFound = false;
   weekSpacer = 7;

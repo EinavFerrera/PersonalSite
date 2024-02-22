@@ -1,61 +1,6 @@
-const popoverTriggerList = document.querySelectorAll(
-  '[data-bs-toggle="popover"]'
-);
-const popoverList = [...popoverTriggerList].map(
-  (popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl)
-);
-
-let namesArray = [];
-let maxShifts = [];
-let sholtimObjectArray = [];
-
-let shiftsAvailability = [];
-let shiftNeeds = [];
-let Vertix = 0;
-let graph = [];
-let u, v;
-let rGraph = new Array(Vertix);
-const daysOfWeek = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
-const shiftsNames = [
-  "Sunday 1",
-  "Sunday 2",
-  "Sunday 3",
-  "Monday 1",
-  "Monday 2",
-  "Monday 3",
-  "Tuesday 1",
-  "Tuesday 2",
-  "Tuesday 3",
-  "Wednesday 1",
-  "Wednesday 2",
-  "Wednesday 3",
-  "Thursday 1",
-  "Thursday 2",
-  "Thursday 3",
-  "Friday 1",
-  "Friday 2",
-  "Friday 3",
-  "Saturday 1",
-  "Saturday 2",
-  "Saturday 3",
-];
-
-class Sholet {
-  constructor(name, shifts, maxShifts) {
-    this.name = name;
-    this.shifts = shifts;
-    this.maxShifts = maxShifts;
-  }
-}
-
+/**
+ * Initializes the data by retrieving arrays from localStorage and performing necessary operations.
+ */
 function InitializeData() {
   // Retrieve arrays from localStorage
   namesArray = JSON.parse(localStorage.getItem("namesArray")) || [];
@@ -76,6 +21,9 @@ function InitializeData() {
   }
 }
 
+/**
+ * Initializes the shift needs by retrieving values from localStorage and setting default values if necessary.
+ */
 function initializeShiftNeeds() {
   for (const day of daysOfWeek) {
     for (let i = 1; i <= 3; i++) {
@@ -94,6 +42,9 @@ function initializeShiftNeeds() {
   }
 }
 
+/**
+ * Sets the shift needs for each day of the week.
+ */
 function setShiftNeeds() {
   for (const day of daysOfWeek) {
     for (let i = 1; i <= 3; i++) {
@@ -103,6 +54,11 @@ function setShiftNeeds() {
   }
 }
 
+/**
+ * Adds a new user to the system.
+ *
+ * @returns {void}
+ */
 function addUser() {
   // Get user input values
   let userName = $("#userName").val();
@@ -134,6 +90,10 @@ function addUser() {
   generateGraph();
 }
 
+/**
+ * Generates a graph based on the shift needs values for each day of the week.
+ * @returns {void}
+ */
 function generateGraph() {
   // Get shift needs values
   shiftNeeds = [];
@@ -150,6 +110,10 @@ function generateGraph() {
   console.log(graph);
 }
 
+/**
+ * Builds a graph based on user data.
+ * @returns {number[][]} The built graph.
+ */
 function buildGraph() {
   console.log("shiftNeeds:", shiftNeeds);
   console.log("namesArray:", namesArray);
@@ -188,6 +152,10 @@ function buildGraph() {
   return graph;
 }
 
+/**
+ * Retrieves the values of checkboxes with class 'btn-check'.
+ * @returns {number[]} An array of checkbox values, where 1 represents checked and 0 represents unchecked.
+ */
 function getCheckboxValues() {
   let checkboxValues = [];
   let x = 0;
@@ -202,6 +170,12 @@ function getCheckboxValues() {
   return checkboxValues;
 }
 
+/**
+ * Adds a user badge to the user container with the provided user information.
+ * @param {string} userName - The name of the user.
+ * @param {number[]} userShifts - An array representing the shifts of the user.
+ * @param {number} maxS - The maximum number of shifts for the user.
+ */
 function addUserBadge(userName, userShifts, maxS) {
   console.log("max: " + maxS);
   let dayShifts = "Max Shifts: " + maxS + " ||| ";
@@ -262,6 +236,13 @@ function removeUser(el) {
   location.reload();
 }
 
+/**
+ * Toggles the checked state of all checkboxes.
+ * If an element is provided, it toggles the checked state of checkboxes associated with that element.
+ * If no element is provided, it toggles the checked state of all checkboxes.
+ *
+ * @param {HTMLElement} el - The element associated with the checkboxes to toggle (optional).
+ */
 function checkAll(el) {
   let checkboxes = document.querySelectorAll(".btn-check");
   if (el !== undefined) {
@@ -282,6 +263,10 @@ function checkAll(el) {
   }
 }
 
+/**
+ * Clears the localStorage and removes all users from the DOM.
+ * @function localStorageClear
+ */
 function localStorageClear() {
   // Show confirmation modal
   $("#confirmClearModal").modal("show");
