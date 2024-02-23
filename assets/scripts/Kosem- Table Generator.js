@@ -229,6 +229,7 @@ function orderByRatio(tempGraph) {
   }
   //randomize the order and than sort it by the ratio where the lowest ratio will be first
   let newOrder = sholetRatio.toSorted(() => Math.random() - 0.5);
+  newOrder = sholetRatio.toSorted(() => Math.random() - 0.5);
   newOrder.sort((a, b) => a.ratio - b.ratio).reverse();
 
   for (let j = numOfSholtim + 1; j <= 8 * numOfSholtim; j++) {
