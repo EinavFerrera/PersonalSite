@@ -5,6 +5,7 @@
  */
 
 function generateConfirmation(timesToRun) {
+  console.log("per-", perfectTable);
   if (typeof timesToRun != "number") {
     timesToRun = Number(timesToRun);
   }
@@ -26,7 +27,6 @@ function generateConfirmation(timesToRun) {
       perfectTable = false;
       generate();
     });
-    console.log("perfectTable: ", timesToRun);
   } else if (succesGenerate) {
     $("#sholtim-container").empty();
     $("#shift-container").empty();
