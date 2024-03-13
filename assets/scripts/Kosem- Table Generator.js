@@ -25,11 +25,13 @@ function generateConfirmation(timesToRun) {
       $("#sholtim-container").empty();
       $("#shift-container").empty();
       perfectTable = false;
+      succesGenerate = false;
       generate();
     });
   } else if (succesGenerate) {
     $("#sholtim-container").empty();
     $("#shift-container").empty();
+    succesGenerate = false;
     generate();
   } else {
     generate();
@@ -89,8 +91,10 @@ function generate() {
     return;
   }
   //if all shifts are covered
-  showToast("SUCCESS! ", false);
-  succesGenerate = true;
+  if (!succesGenerate) {
+    showToast("SUCCESS! ", false);
+    succesGenerate = true;
+  }
 
   //gains the conflicts (if any)
   if (checkIntegrity() === false) {
@@ -357,7 +361,7 @@ function showToast(message, isError = false) {
   } else {
     newToastElement.addClass("bg-success");
   }
-
+  console.log("YOOO", newToastElement);
   // Append the new toast element to the toast container
   toastContainer.append(newToastElement);
 
