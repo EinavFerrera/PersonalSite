@@ -5,6 +5,7 @@ function InitializeData() {
   // Retrieve arrays from localStorage
   namesArray = JSON.parse(localStorage.getItem("namesArray")) || [];
   maxShifts = JSON.parse(localStorage.getItem("maxShifts")) || [];
+  minShifts = JSON.parse(localStorage.getItem("minShifts")) || [];
   sholtimObjectArray =
     JSON.parse(localStorage.getItem("sholtimObjectArray")) || [];
   if (localStorage.getItem("sholtimObjectArray") !== null) {
@@ -12,7 +13,8 @@ function InitializeData() {
       addUserBadge(
         sholtimObjectArray[i].name,
         sholtimObjectArray[i].shifts,
-        sholtimObjectArray[i].maxShifts
+        sholtimObjectArray[i].maxShifts,
+        sholtimObjectArray[i].minShifts
       );
     }
     shiftNeeds = JSON.parse(localStorage.getItem("shiftNeeds")) || [];
@@ -67,18 +69,29 @@ function addUser() {
   }
   let shifts = getCheckboxValues();
   let maxShift = parseInt($("#maxShifts").val());
+  let minShift = parseInt($("#minShifts").val());
+  console.log("min ", minShift);
+  if (isNaN(maxShift)) {
+    maxShift = 0;
+  }
+  if (isNaN(minShift)) {
+    minShift = 0;
+  }
+  console.log("min2 ", minShift);
 
-  let newSholet = new Sholet(userName, shifts, maxShift);
-  addUserBadge(userName, shifts, maxShift);
+  let newSholet = new Sholet(userName, shifts, maxShift, minShift);
+  addUserBadge(userName, shifts, maxShift, minShift);
 
   // Append values to arrays
   namesArray.push(userName);
   maxShifts.push(maxShift);
+  minShifts.push(minShift);
   sholtimObjectArray.push(newSholet);
 
   // Save arrays back to localStorage
   localStorage.setItem("namesArray", JSON.stringify(namesArray));
   localStorage.setItem("maxShifts", JSON.stringify(maxShifts));
+  localStorage.setItem("minShifts", JSON.stringify(minShifts));
   localStorage.setItem(
     "sholtimObjectArray",
     JSON.stringify(sholtimObjectArray)
@@ -87,6 +100,7 @@ function addUser() {
   // Reset form fields
   $("#userName").val("");
   $("#maxShifts").val("");
+  $("#minShifts").val("");
   generateGraph();
 }
 
@@ -176,21 +190,142 @@ function getCheckboxValues() {
  * @param {number[]} userShifts - An array representing the shifts of the user.
  * @param {number} maxS - The maximum number of shifts for the user.
  */
-function addUserBadge(userName, userShifts, maxS) {
-  console.log("max: " + maxS);
-  let dayShifts = "Max Shifts: " + maxS + " ||| ";
-
+function addUserBadge(userName, userShifts, maxS, minShift) {
+  console.log("min ", minShift);
+  if (minShift == 0) {
+    hasMinShifts = "";
+  } else {
+    hasMinShifts = " hasMinShifts";
+  }
   for (let j = 0; j < userShifts.length; j++) {
     if (userShifts[j] == 1) {
-      dayShifts += shiftsNames[j];
-      dayShifts += ", ";
+      dayTags[j] = " pick";
+    } else {
+      dayTags[j] = "";
     }
   }
-  dayShifts = dayShifts.slice(0, -2);
+  const table =
+    "<div " +
+    " class='table-view" +
+    hasMinShifts +
+    "'>" +
+    "<div " +
+    " class='grid-col'>" +
+    "Su" +
+    "<div " +
+    " class='grid-cell" +
+    dayTags[0] +
+    "'></div>" +
+    "<div " +
+    " class='grid-cell" +
+    dayTags[1] +
+    "'></div>" +
+    "<div " +
+    " class='grid-cell" +
+    dayTags[2] +
+    "'></div>" +
+    "</div>" +
+    "<div " +
+    " class='grid-col'>" +
+    "M" +
+    "<div " +
+    " class='grid-cell" +
+    dayTags[3] +
+    "'></div>" +
+    "<div " +
+    " class='grid-cell" +
+    dayTags[4] +
+    "'></div>" +
+    "<div " +
+    " class='grid-cell" +
+    dayTags[5] +
+    "'></div>" +
+    "</div>" +
+    "<div " +
+    " class='grid-col'>" +
+    "Tu" +
+    "<div " +
+    " class='grid-cell" +
+    dayTags[6] +
+    "'></div>" +
+    "<div " +
+    " class='grid-cell" +
+    dayTags[7] +
+    "'></div>" +
+    "<div " +
+    " class='grid-cell" +
+    dayTags[8] +
+    "'></div>" +
+    "</div>" +
+    "<div " +
+    " class='grid-col'>" +
+    "W" +
+    "<div " +
+    " class='grid-cell" +
+    dayTags[9] +
+    "'></div>" +
+    "<div " +
+    " class='grid-cell" +
+    dayTags[10] +
+    "'></div>" +
+    "<div " +
+    " class='grid-cell" +
+    dayTags[11] +
+    "'></div>" +
+    "</div>" +
+    "<div " +
+    " class='grid-col'>" +
+    "Th" +
+    "<div " +
+    " class='grid-cell" +
+    dayTags[12] +
+    "'></div>" +
+    "<div " +
+    " class='grid-cell" +
+    dayTags[13] +
+    "'></div>" +
+    "<div " +
+    " class='grid-cell" +
+    dayTags[14] +
+    "'></div>" +
+    "</div>" +
+    "<div " +
+    " class='grid-col'>" +
+    "F" +
+    "<div " +
+    " class='grid-cell" +
+    dayTags[15] +
+    "'></div>" +
+    "<div " +
+    " class='grid-cell" +
+    dayTags[16] +
+    "'></div>" +
+    "<div " +
+    " class='grid-cell" +
+    dayTags[17] +
+    "'></div>" +
+    "</div>" +
+    "<div " +
+    " class='grid-col'>" +
+    "Sa" +
+    "<div " +
+    " class='grid-cell" +
+    dayTags[18] +
+    "'></div>" +
+    "<div " +
+    " class='grid-cell" +
+    dayTags[19] +
+    "'></div>" +
+    "<div " +
+    " class='grid-cell" +
+    dayTags[20] +
+    "'></div>" +
+    "</div>" +
+    "</div>";
 
   let newUserBadge = $(
-    '<span class="badge d-flex p-2 align-items-center text-primary-emphasis bg-primary-subtle rounded-pill" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="' +
-      dayShifts +
+    '<span class="badge d-flex align-items-center text-primary-emphasis bg-primary-subtle rounded-pill my-badge" data-bs-toggle="popover" data-bs-placement="top" data-bs-html="true" data-bs-content="' +
+      table +
       '">' +
       '<span class="px-1 userName">' +
       userName +
@@ -203,7 +338,7 @@ function addUserBadge(userName, userShifts, maxS) {
   $("#sigend-user-container").append(newUserBadge);
   new bootstrap.Popover(newUserBadge[0], {
     container: "body",
-    trigger: "hover",
+    trigger: "click",
   });
 }
 

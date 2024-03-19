@@ -10,3 +10,53 @@
 .visible {
   opacity: 1 !important; /* Make the element visible by changing opacity to 1 */
 }
+
+.table-view {
+  display: inline-flex;
+  background-color: #cfe2ff;
+  border-collapse: collapse;
+  border-radius: 10px;
+  padding: 3px;
+  position: relative;
+  top: -3px;
+  left: 2px;
+  box-shadow: inset 0 0px 14px 2px rgb(255 255 255);
+}
+.grid-col {
+  font-size: 0.5rem;
+  border-collapse: collapse;
+  width: 12px;
+  text-align: center;
+  margin-left: 2px;
+}
+
+.grid-cell {
+  text-align: center;
+  border-collapse: collapse;
+  width: 10px;
+  height: 10px;
+  border: 1px solid black;
+  border-radius: 3px;
+  margin-bottom: 5px;
+}
+.popover-body {
+  padding: 0px !important;
+  height: 65px !important;
+  width: 107px !important;
+}
+
+.grid-cell.pick {
+  background-color: #6d757d;
+}
+
+.dropdown-menu.w-25.show {
+  transform: translate(200px, -8px) !important;
+}
+.hasMinShifts {
+  /* background-color: #ffcfdc; */
+}
+
+.dropdown-no-border {
+  border: 1px #dfe2e7 solid;
+  border-left: 0px;
+}

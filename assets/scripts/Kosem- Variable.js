@@ -32,6 +32,7 @@ const shiftsNamesShort = [
 
 let namesArray = [];
 let maxShifts = [];
+let minShifts = [];
 let sholtimObjectArray = [];
 
 let shiftsAvailability = [];
@@ -73,11 +74,37 @@ const shiftsNames = [
   "Saturday 3",
 ];
 
+let dayTags = [
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+];
+let hasMinShifts = "";
+let minShift;
 class Sholet {
-  constructor(name, shifts, maxShifts) {
+  constructor(name, shifts, maxShifts, minShifts) {
     this.name = name;
     this.shifts = shifts;
     this.maxShifts = maxShifts;
+    this.minShifts = minShifts;
   }
 }
 const popoverTriggerList = document.querySelectorAll(
