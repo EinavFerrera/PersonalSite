@@ -407,7 +407,11 @@
           </div>
           <div class="col-4 col-md-3 col-xl-2">
             <label for="maxShifts" class="form-label">Max Num of Shifts:</label>
-            <div class="btn-group dropdown-no-border">
+            <div
+              class="btn-group"
+              role="group"
+              style="border: #dee2e6 solid 1px"
+            >
               <input
                 type="text"
                 id="maxShifts"
@@ -428,7 +432,10 @@
                 style="background-color: rgba(0, 0, 0, 0); border: 0px"
               >
                 <div class="input-group mb">
-                  <span class="input-group-text" id="inputGroup-sizing-default"
+                  <span
+                    class="input-group-text"
+                    id="inputGroup-sizing-default"
+                    style="background-color: #ebe9e4"
                     >Min Shifts</span
                   >
                   <input
@@ -881,7 +888,8 @@
         </div>
 
         <span
-          class="badge d-flex p-2 text-center text-dark-emphasis bg-dark-subtle rounded-pill m-2"
+          class="badge d-flex text-center text-dark-emphasis bg-dark-subtle rounded-pill m-2"
+          data-bs-trigger="hover"
           data-bs-toggle="popover"
           data-bs-placement="top"
           data-bs-content="Delete all Users"

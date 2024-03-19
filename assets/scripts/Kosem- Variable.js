@@ -31,8 +31,8 @@ const shiftsNamesShort = [
 ];
 
 let namesArray = [];
-let maxShifts = [];
-let minShifts = [];
+let maxShiftsArr = [];
+let minShiftsArr = [];
 let sholtimObjectArray = [];
 
 let shiftsAvailability = [];
@@ -98,7 +98,7 @@ let dayTags = [
   "",
 ];
 let hasMinShifts = "";
-let minShift;
+let minShifts;
 class Sholet {
   constructor(name, shifts, maxShifts, minShifts) {
     this.name = name;

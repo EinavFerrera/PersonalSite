@@ -39,7 +39,7 @@
   border-radius: 3px;
   margin-bottom: 5px;
 }
-.popover-body {
+.table-popover .popover-body {
   padding: 0px !important;
   height: 65px !important;
   width: 107px !important;
@@ -49,11 +49,12 @@
   background-color: #6d757d;
 }
 
-.dropdown-menu.w-25.show {
-  transform: translate(200px, -8px) !important;
+.dropdown-menu.w-25.show .input-group.mb > * {
+  border-color: #dee2e6;
+  background-color: #f6f6f6;
 }
 .hasMinShifts {
-  /* background-color: #ffcfdc; */
+  background-color: #c5f8c0;
 }
 
 .dropdown-no-border {

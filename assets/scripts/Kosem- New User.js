@@ -4,8 +4,8 @@
 function InitializeData() {
   // Retrieve arrays from localStorage
   namesArray = JSON.parse(localStorage.getItem("namesArray")) || [];
-  maxShifts = JSON.parse(localStorage.getItem("maxShifts")) || [];
-  minShifts = JSON.parse(localStorage.getItem("minShifts")) || [];
+  maxShiftsArr = JSON.parse(localStorage.getItem("maxShiftsArr")) || [];
+  minShiftsArr = JSON.parse(localStorage.getItem("minShiftsArr")) || [];
   sholtimObjectArray =
     JSON.parse(localStorage.getItem("sholtimObjectArray")) || [];
   if (localStorage.getItem("sholtimObjectArray") !== null) {
@@ -13,7 +13,6 @@ function InitializeData() {
       addUserBadge(
         sholtimObjectArray[i].name,
         sholtimObjectArray[i].shifts,
-        sholtimObjectArray[i].maxShifts,
         sholtimObjectArray[i].minShifts
       );
     }
@@ -70,28 +69,26 @@ function addUser() {
   let shifts = getCheckboxValues();
   let maxShift = parseInt($("#maxShifts").val());
   let minShift = parseInt($("#minShifts").val());
-  console.log("min ", minShift);
   if (isNaN(maxShift)) {
     maxShift = 0;
   }
   if (isNaN(minShift)) {
     minShift = 0;
   }
-  console.log("min2 ", minShift);
 
   let newSholet = new Sholet(userName, shifts, maxShift, minShift);
-  addUserBadge(userName, shifts, maxShift, minShift);
+  addUserBadge(userName, shifts, minShift);
 
   // Append values to arrays
   namesArray.push(userName);
-  maxShifts.push(maxShift);
-  minShifts.push(minShift);
+  maxShiftsArr.push(maxShift);
+  minShiftsArr.push(minShift);
   sholtimObjectArray.push(newSholet);
 
   // Save arrays back to localStorage
   localStorage.setItem("namesArray", JSON.stringify(namesArray));
-  localStorage.setItem("maxShifts", JSON.stringify(maxShifts));
-  localStorage.setItem("minShifts", JSON.stringify(minShifts));
+  localStorage.setItem("maxShiftsArr", JSON.stringify(maxShiftsArr));
+  localStorage.setItem("minShiftsArr", JSON.stringify(minShiftsArr));
   localStorage.setItem(
     "sholtimObjectArray",
     JSON.stringify(sholtimObjectArray)
@@ -119,9 +116,6 @@ function generateGraph() {
 
   // Build the graph
   graph = buildGraph();
-
-  // Log the generated graph
-  console.log(graph);
 }
 
 /**
@@ -129,10 +123,6 @@ function generateGraph() {
  * @returns {number[][]} The built graph.
  */
 function buildGraph() {
-  console.log("shiftNeeds:", shiftNeeds);
-  console.log("namesArray:", namesArray);
-  console.log("maxShifts:", maxShifts);
-
   let graph = [];
   Vertix = namesArray.length * 8 + shiftNeeds.length + 2;
 
@@ -143,7 +133,7 @@ function buildGraph() {
   // Build the graph based on user data
   for (let i = 0; i < namesArray.length; i++) {
     // Connect source to sholtim
-    graph[0][i + 1] = maxShifts[i];
+    graph[0][i + 1] = maxShiftsArr[i];
     weekSpacer = 7 * i;
     totalWeekSpacer = 7 * namesArray.length;
 
@@ -188,10 +178,9 @@ function getCheckboxValues() {
  * Adds a user badge to the user container with the provided user information.
  * @param {string} userName - The name of the user.
  * @param {number[]} userShifts - An array representing the shifts of the user.
- * @param {number} maxS - The maximum number of shifts for the user.
+ * @param {number} minShift - The minimum number of shifts for the user.
  */
-function addUserBadge(userName, userShifts, maxS, minShift) {
-  console.log("min ", minShift);
+function addUserBadge(userName, userShifts, minShift) {
   if (minShift == 0) {
     hasMinShifts = "";
   } else {
@@ -324,7 +313,7 @@ function addUserBadge(userName, userShifts, maxS, minShift) {
     "</div>";
 
   let newUserBadge = $(
-    '<span class="badge d-flex align-items-center text-primary-emphasis bg-primary-subtle rounded-pill my-badge" data-bs-toggle="popover" data-bs-placement="top" data-bs-html="true" data-bs-content="' +
+    '<span class="badge d-flex align-items-center text-primary-emphasis bg-primary-subtle rounded-pill my-badge" data-bs-toggle="popover" data-bs-placement="top" data-bs-custom-class="table-popover" data-bs-html="true" data-bs-content="' +
       table +
       '">' +
       '<span class="px-1 userName">' +
@@ -338,7 +327,7 @@ function addUserBadge(userName, userShifts, maxS, minShift) {
   $("#sigend-user-container").append(newUserBadge);
   new bootstrap.Popover(newUserBadge[0], {
     container: "body",
-    trigger: "click",
+    trigger: "hover",
   });
 }
 
@@ -353,12 +342,14 @@ function removeUser(el) {
   if (index !== -1) {
     // Remove the user from arrays
     namesArray.splice(index, 1);
-    maxShifts.splice(index, 1);
+    maxShiftsArr.splice(index, 1);
+    minShiftsArr.splice(index, 1);
     sholtimObjectArray.splice(index, 1);
 
     // Save arrays back to localStorage
     localStorage.setItem("namesArray", JSON.stringify(namesArray));
-    localStorage.setItem("maxShifts", JSON.stringify(maxShifts));
+    localStorage.setItem("maxShiftsArr", JSON.stringify(maxShiftsArr));
+    localStorage.setItem("minShiftsArr", JSON.stringify(minShiftsArr));
     localStorage.setItem(
       "sholtimObjectArray",
       JSON.stringify(sholtimObjectArray)
