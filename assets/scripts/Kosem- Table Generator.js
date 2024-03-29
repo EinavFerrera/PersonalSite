@@ -361,7 +361,6 @@ function showToast(message, isError = false) {
   } else {
     newToastElement.addClass("bg-success");
   }
-  console.log("YOOO", newToastElement);
   // Append the new toast element to the toast container
   toastContainer.append(newToastElement);
 
@@ -411,6 +410,7 @@ function userDisplay(i, count, validShifts) {
       $("#sholet-" + i + "> .list-group").append(newSholetShiftsListElemnt);
     }
   }
+  minConflictsAdd(i, count);
 }
 
 /**
@@ -442,7 +442,7 @@ function shiftDisplay() {
     for (let j = 1; j <= numOfSholtim * 7; j++) {
       if (rGraph[numOfSholtim * 8 + 1 + i][j + numOfSholtim] === 1) {
         const newShiftSholtimListElemnt = $(
-          '<li class="list-group-item" style="font-size: 0.8rem">' +
+          '<li class="list-group-item" style="font-size: 0.8rem; word-wrap: break-word;">' +
             namesArray[Math.floor((j - 1) / 7)] +
             "</li>"
         );
@@ -475,12 +475,6 @@ function checkIntegrity() {
   let integrityFound = false;
   weekSpacer = 7;
   $("#collapseExample > div > ul").children("li").remove();
-  const newLiElement = $(
-    "<li style='font-weight:bold; text-decoration:underline;'>" +
-      "CONFLICTS:" +
-      "</li>"
-  );
-  $("#collapseExample > div > ul").append(newLiElement);
 
   for (let i = 0; i < numOfSholtim; i++) {
     //checks for each sholet
@@ -499,10 +493,21 @@ function checkIntegrity() {
                 f + numOfSholtim + t + i * weekSpacer
               ] === 1
             ) {
+              if (
+                $("#collapseExample > div > ul > #conflict-header")[0] ===
+                undefined
+              ) {
+                const newLiElement = $(
+                  "<li id= 'conflict-header' style='font-weight:bold; text-decoration:underline;'>" +
+                    "CONFLICTS:" +
+                    "</li>"
+                );
+                $("#collapseExample > div > ul").append(newLiElement);
+              }
               const newLiElement = $(
-                "<li>" +
+                "<li><span style='font-weight:bold;'>" +
                   namesArray[i] +
-                  " has conflict in: " +
+                  "</span> has conflict in: " +
                   shiftsNames[j] +
                   " and " +
                   shiftsNames[j + p] +
@@ -517,7 +522,38 @@ function checkIntegrity() {
       }
     }
   }
+  for (let i = 0; i < numOfSholtim; i++) {
+    if (integrityFound === false) {
+      integrityFound = false;
+    }
+  }
+
   return integrityFound;
+}
+
+function minConflictsAdd(i, count) {
+  if (sholtimObjectArray[i].minShifts > count) {
+    if ($("#collapseExample > div > ul > #min-header")[0] === undefined) {
+      const newLiElement = $(
+        "<li id= 'min-header' style='font-weight:bold; text-decoration:underline;'>" +
+          "Minimum Shifts:" +
+          "</li>"
+      );
+      $("#collapseExample > div > ul").append(newLiElement);
+    }
+    const newLiElement = $(
+      "<li><span style='font-weight:bold;'> " +
+        namesArray[i] +
+        "</span> has <span style='font-weight:bold;'>" +
+        count +
+        "</span>" +
+        " shifts, but should do at least <span style='font-weight:bold;'>" +
+        sholtimObjectArray[i].minShifts +
+        "</span>"
+    );
+    $("#collapseExample > div > ul").append(newLiElement);
+    $("#toggel-error-view").addClass("visible");
+  }
 }
 
 // Initially hide one of the views
