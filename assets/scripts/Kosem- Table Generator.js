@@ -109,6 +109,14 @@ function generate() {
     let count = validShifts.filter((shift) => shift === 1).length;
     userDisplay(i, count, validShifts);
   }
+  if (BEST_graphConflictsNumber > $("#collapseExample > div > ul >").length) {
+    BEST_graphConflictsNumber = $("#collapseExample > div > ul >").length;
+    for (u = 0; u < Vertix; u++) {
+      BEST_rGraph[u] = new Array(Vertix);
+      for (v = 0; v < Vertix; v++) BEST_rGraph[u][v] = rGraph[u][v];
+    }
+  }
+
   shiftDisplay();
 }
 

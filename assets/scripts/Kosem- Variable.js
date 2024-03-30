@@ -39,8 +39,11 @@ let shiftsAvailability = [];
 let shiftNeeds = [];
 let Vertix = 0;
 let graph = [];
-let u, v;
 let rGraph = new Array(Vertix);
+let BEST_graph = [];
+let BEST_rGraph = new Array(Vertix);
+let BEST_graphConflictsNumber = 100;
+let u, v;
 const daysOfWeek = [
   "Sunday",
   "Monday",
