@@ -1,0 +1,49 @@
+<%-include("partial/header.ejs")%>
+<div class="total-cont d-flex">
+  <section class="head w-100" style="max-width: 50%">
+    <div id="head" class="px-4 mg-0">
+      <div
+        class="row flex-lg-row-reverse align-items-center g-5 py-5 text-end text-sm-start"
+      >
+        <div class=""></div>
+        <div class="">
+          <h1
+            class="glow display-5 fw-bold text-body-emphasis lh-1 mb-3 mouseo outline z-3 position-relative ps-md-5 ps-2 welcome-animation"
+            style="font-size: 4rem"
+          >
+            WELCOME
+            <div class="welcome-animation-square"></div>
+          </h1>
+          <div class="pill1 z-1"></div>
+          <p
+            class="fw-bold float lead work fw-medium position-relative z-2 ps-md-5 ps-2"
+          >
+            to Twitter NEW Successor
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="text-input">
+      <form action="/" method="post" class="d-flex w-100">
+        <textarea
+          type="text"
+          name="inputText"
+          placeholder="Enter your Tweet here"
+          style="height: 20vh"
+          class="flex-grow-1 ms-5"
+        ></textarea>
+        <input type="submit" value="Submit" class="submit-btn mouseo me-2" />
+      </form>
+    </div>
+  </section>
+
+  <section class="input-form"></section>
+
+  <section class="Tweets d-flex flex-grow-1 align-items-start">
+    <div class="d-flex flex-column flex-grow-1">
+      <% if(locals.tweetArray){ tweetArray.forEach(tweet => { %> <%-tweet.ele%>
+      <%});}%>
+    </div>
+  </section>
+</div>
+<%-include("partial/footer.ejs")%>

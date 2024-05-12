@@ -1,0 +1,263 @@
+body {
+  background-color: #f8f0e5;
+}
+
+#head {
+  background-image: url("../../../assets/images/background home page.png");
+  background-size: cover;
+  background-position: bottom right;
+  width: 100%;
+}
+
+.mouseo {
+  font-family: "MuseoModerno", cursive;
+}
+
+.dosis {
+  font-family: "Dosis", sans-serif;
+}
+
+.work {
+  font-family: "Work Sans", sans-serif;
+}
+.outline {
+  -webkit-text-stroke: 2px black;
+  color: transparent !important;
+}
+
+.image-cropped-calc {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-box-slide2 {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-top: calc(100% * (100 / 185));
+}
+
+.pill1 {
+  left: 70px;
+  top: 164px;
+  width: 293px;
+  height: 143px;
+  background-color: transparent;
+  border: 20px solid #f8f0e560;
+  border-radius: 85px;
+  text-align: center;
+  line-height: 50px;
+  position: absolute;
+}
+
+.pill2 {
+  width: 500px;
+  height: 250px;
+  background-color: transparent !important;
+  background: linear-gradient(310deg, #dac0a3, #eadbc8) border-box;
+  border-radius: 45px;
+  border: 45px solid transparent;
+  border-radius: 300px;
+  text-align: center;
+  line-height: 50px;
+  grid-area: 1/1 / span 3/1;
+}
+.profile-picture {
+  width: 130px;
+  border-radius: 50%;
+  border: #eadbc8 solid 0.3rem;
+}
+
+.feature-icon {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 0.75rem;
+}
+.bg-grad {
+  background: linear-gradient(135deg, #dac0a3, #eadbc8);
+}
+.bg-grad-blue {
+  background: #2b1d2140;
+  color: #eadbc8 !;
+}
+.bg-blue {
+  background: #0d1a2e;
+}
+
+.grid-container {
+  display: grid;
+  grid-template: 100px 83px 83px / 1fr;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  align-items: center;
+}
+.grid-1 {
+  font-size: 4rem !important;
+  align-self: start;
+  grid-area: 1/1/1/1;
+  margin-left: 30px;
+  margin-top: 8px;
+}
+.grid-2 {
+  grid-area: 2/1/2/-1;
+}
+.grid-3 {
+  margin-top: 10px;
+  grid-area: 3/1/3/-1;
+  padding: 20px;
+  border: 0px;
+}
+
+.glow {
+  font-size: 80px;
+  color: #f8f0e540;
+  animation: glow 5s ease-in-out infinite alternate;
+}
+
+.tweet-box {
+  background-color: #64718a;
+  color: #f5f2ee;
+  border: #60697b solid 0.2rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+}
+p {
+  word-break: break-all;
+  white-space: normal;
+}
+
+.tweet-time {
+  color: #f5f2ee;
+  font-size: 0.6rem;
+  margin-top: 22px;
+  margin-bottom: 0px;
+}
+.tweet-edit {
+  color: #f5f2ee;
+}
+.submit-btn {
+  background-color: #454950;
+  color: #f5f2ee;
+  border-radius: 0.9rem;
+  margin-left: 0.2rem;
+}
+textarea {
+  width: 100%;
+  height: 100px;
+  border-radius: 0.5rem;
+  border: #60697b solid 0.1rem;
+  font-size: 1rem;
+  font-family: "Work Sans", sans-serif;
+}
+
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 10px transparent, 0 0 20px transparent,
+      0 0 30px transparent, 0 0 40px transparent, 0 0 50px transparent,
+      0 0 60px transparent, 0 0 70px transparent;
+  }
+
+  to {
+    text-shadow: 0 0 20px #f8f0e540, 0 0 30px #f8f0e540, 0 0 40px #f8f0e540,
+      0 0 50px #f8f0e540, 0 0 60px #f8f0e540, 0 0 70px #f8f0e540,
+      0 0 80px #f8f0e540;
+  }
+}
+
+@media (min-width: 992px) {
+  .center-flex {
+    display: flex;
+    justify-content: center;
+  }
+  .pill1 {
+    left: 70px;
+    top: 120px;
+  }
+}
+@media (max-width: 768px) {
+  .pill1 {
+    left: 15px;
+    top: 169px;
+  }
+}
+
+@media (max-width: 576px) {
+  .float {
+    float: right;
+  }
+  .pill1 {
+    left: 150px;
+    top: 180px;
+  }
+  .glow {
+    text-align: right;
+  }
+}
+
+@media (max-width: 400px) {
+  .tooBig {
+    font-size: 12px;
+  }
+}
+
+.gradient-background {
+  background: linear-gradient(300deg, #dac0a3, #f8f0e5, #102c57);
+  background-size: 180% 180%;
+  animation: gradient-animation 18s ease infinite;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+/* CSS for the animation */
+.welcome-animation-square {
+  position: absolute;
+  top: 10%;
+  left: -100px; /* Initial position off-screen */
+  width: 50px;
+  height: 80px;
+  background-color: blue;
+  opacity: 0.5; /* Adjust opacity as needed */
+  border-radius: 1rem;
+}
+
+.welcome-animation:hover .welcome-animation-square {
+  animation: welcomeAnimation 2s forwards;
+}
+
+@keyframes welcomeAnimation {
+  0% {
+    left: 0px;
+    width: 70px; /* Starting width */
+    opacity: 0; /* Starting opacity */
+  }
+  25% {
+    width: 80px; /* Width at 25% of the animation duration */
+    opacity: 0.5; /* Fade in */
+  }
+  50% {
+    width: 100px; /* Width at 50% of the animation duration */
+    left: calc(50% - 20px); /* Halfway across the screen */
+    opacity: 0.2; /* Fully visible */
+  }
+  75% {
+    width: 50px; /* Width at 50% of the animation duration */
+  }
+  100% {
+    width: 40px;
+    left: calc(100% + 100px); /* Completely off-screen */
+    opacity: 0; /* Fade out */
+  }
+}
