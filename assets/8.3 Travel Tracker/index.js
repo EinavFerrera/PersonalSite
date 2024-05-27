@@ -33,10 +33,13 @@ app.get("/", async (req, res) => {
   res.render("index.ejs", { total: list.length, countries: list });
 });
 app.post("/add", async (req, res) => {
+  const input =
+    req.body.country.charAt(0).toUpperCase() +
+    req.body.country.slice(1).toLowerCase();
   try {
     let new_county_code = await db.query(
-      "SELECT country_code FROM countries WHERE country_name = $1",
-      [req.body.country]
+      "SELECT country_code FROM countries WHERE country_name LIKE `%` || $1 || `%`",
+      [input]
     );
     const data = new_county_code.rows[0];
     const countryCode = data.country_code;
