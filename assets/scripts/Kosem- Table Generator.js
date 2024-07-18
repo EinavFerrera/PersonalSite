@@ -5,14 +5,12 @@
  */
 
 function generateConfirmation(timesToRun) {
-  console.log("per-", perfectTable);
   if (typeof timesToRun != "number") {
     timesToRun = Number(timesToRun);
   }
   if (typeof timesToRun != "number") {
     timesToRun = 0;
   }
-  console.log(timesToRun);
   if (timesToRun > 1 && !perfectTable) {
     $("#sholtim-container").empty();
     $("#shift-container").empty();

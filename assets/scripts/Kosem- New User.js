@@ -113,6 +113,7 @@ function generateGraph() {
     shiftNeeds.push(parseInt($("#" + day.toLowerCase() + "2").val(), 10));
     shiftNeeds.push(parseInt($("#" + day.toLowerCase() + "3").val(), 10));
   }
+  console.log("this is SHIFTS NEED:___", shiftNeeds);
 
   // Build the graph
   graph = buildGraph();
@@ -332,9 +333,7 @@ function addUserBadge(userName, userShifts, minShift) {
 }
 
 function removeUser(el) {
-  console.log(el.parentElement);
   let userName = el.parentElement.textContent;
-  console.log("userName: " + userName);
 
   // Find the index of the user in the namesArray
   let index = namesArray.indexOf(userName);
